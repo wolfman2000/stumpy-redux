@@ -1,0 +1,11 @@
+{
+  "extends": ["tslint:latest", "tslint-react"],
+  "rules": {
+    "quotemark": {
+      "options": ["single", "jsx-single"]
+    },
+    "space-within-parens": {
+      "options": 1
+    }
+  }
+}
