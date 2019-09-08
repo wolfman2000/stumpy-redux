@@ -1,11 +1,16 @@
 {
   "name": "stumpy-redux",
   "version": "0.1.0",
+  "description": "A flexible tracker for Link to the Past Randomizer using redux.",
   "private": true,
-  "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wolfman2000/stumpy-redux.git"
+  },
+  "author": "wolfman2000",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wolfman2000/stumpy-redux/issues"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -13,6 +18,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.1.1"
+  },
+  "devDependencies": {},
   "eslintConfig": {
     "extends": "react-app"
   },
