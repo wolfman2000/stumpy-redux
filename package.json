@@ -16,6 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cover": "npm run test -- --coverage --watchAll",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -35,6 +36,9 @@
     "@types/redux": "^3.6.0",
     "@types/redux-mock-store": "^1.0.1",
     "@types/redux-testkit": "^1.0.3",
+    "babel-jest": "^24.9.0",
+    "enzyme": "^3.10.0",
+    "react-test-renderer": "^16.9.0",
     "redux-mock-store": "^1.5.3",
     "redux-testkit": "^1.0.6",
     "ts-jest": "^24.0.2",

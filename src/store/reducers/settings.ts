@@ -2,34 +2,16 @@ import { getType } from 'typesafe-actions';
 
 import { StumpyAction, updateSettings } from '../actions';
 
-enum GameType {
-  Standard,
-  Open,
-  Inverted,
-}
-
-interface ISettings {
-  gameType: GameType;
-}
-
-const fallbackSettings: ISettings = {
-  gameType: GameType.Open,
-};
-
-export { fallbackSettings };
+import ISettings, { fallbackSettings } from '../../api/settings';
 
 export function settingReducer( state: ISettings = fallbackSettings, action: StumpyAction ): ISettings {
   switch ( action.type ) {
     case getType( updateSettings ): {
-      const tmp = {
+      const tmp: any = {
         ...state,
       };
 
-      switch ( action.payload.key ) {
-        case 'gameType': {
-          tmp.gameType = action.payload.value;
-        }
-      }
+      tmp[action.payload.key] = action.payload.value;
 
       return tmp;
     }
