@@ -219,8 +219,7 @@ const maxShovel = ( _: StumpyState ) => 1;
 
 export const hasShovel = createSelector(
   getShovel,
-  maxShovel,
-  ( shovel, max ) => shovel > 0 && shovel <= max,
+  ( shovel ) => shovel > 0,
 );
 
 const getBoots = ( state: StumpyState ) => state.inventory[InventoryId.Boots].current;
