@@ -32,7 +32,7 @@ describe( 'The inventory reducer', () => {
     const secondGo = inventoryReducer( firstGo, incrementInventory( payload ) );
 
     expect( secondGo[InventoryId.Shovel].current ).toEqual( 0 );
-  });
+  } );
 
   it( 'should update the shovel upon receiving a decrement command.', () => {
     const payload = {

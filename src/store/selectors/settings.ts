@@ -84,6 +84,21 @@ export const hasShuffledBosses = createSelector(
   ( boss ) => boss !== BossShuffle.None,
 );
 
+export const isNormalItemPool = createSelector(
+  getItemPool,
+  ( pool ) => pool === ItemPool.Normal,
+);
+
+export const isHardItemPool = createSelector(
+  getItemPool,
+  ( pool ) => pool === ItemPool.Hard,
+);
+
+export const isExpertItemPool = createSelector(
+  getItemPool,
+  ( pool ) => pool === ItemPool.Expert,
+);
+
 export const makeGetSetting = () => {
   return ( state: StumpyState, setting: string ): number => {
     // console.log( `getSetting ${setting}`);
