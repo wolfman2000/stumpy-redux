@@ -20,6 +20,6 @@
     "jsx": "react"
   },
   "include": [
-    "src", "typings/react-app-env.d.ts"
+    "src", "react-app-env.d.ts"
   ]
 }
