@@ -74,6 +74,11 @@ export const isSwordless = createSelector(
   ( sword ) => sword === Swords.Swordless,
 );
 
+export const isInverted = createSelector(
+  getGameType,
+  ( type ) => type === GameType.Inverted,
+);
+
 export const hasShuffledBosses = createSelector(
   getBossShuffle,
   ( boss ) => boss !== BossShuffle.None,
