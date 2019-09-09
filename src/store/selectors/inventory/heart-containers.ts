@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 import { StumpyState } from '../../reducers';
 
-import InventoryId from '../../../api/inventory/inventory-id';
 import { isExpertItemPool, isHardItemPool } from '../settings';
 
-import { wrap } from './';
+import { wrap } from '../../../api/helpers';
+import InventoryId from '../../../api/inventory/inventory-id';
 
 export const getHeartContainers = ( state: StumpyState ) => state.inventory[InventoryId.HeartContainer];
 

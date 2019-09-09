@@ -4,9 +4,8 @@ import { isHardItemPool, isNormalItemPool } from '../settings';
 
 import { StumpyState } from '../../reducers';
 
+import { wrap } from '../../../api/helpers';
 import InventoryId from '../../../api/inventory/inventory-id';
-
-import { wrap } from './';
 
 const getShield = ( state: StumpyState ) => state.inventory[InventoryId.Shield];
 

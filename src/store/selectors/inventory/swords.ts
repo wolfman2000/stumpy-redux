@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect';
 
-import InventoryId from '../../../api/inventory/inventory-id';
-
 import { StumpyState } from '../../reducers';
 import { isExpertItemPool, isHardItemPool, isNormalItemPool, isSwordless } from '../settings';
 
-import { wrap } from '.';
+import { wrap } from '../../../api/helpers';
+import InventoryId from '../../../api/inventory/inventory-id';
 
 const getSword = ( state: StumpyState ) => state.inventory[InventoryId.Sword];
 

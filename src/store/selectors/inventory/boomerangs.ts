@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect';
 import { StumpyState } from '../../reducers';
 
-import { wrap } from './';
-
+import { wrap } from '../../../api/helpers';
 import InventoryId from '../../../api/inventory/inventory-id';
 
 const getBlueBoomerang = ( state: StumpyState ) => state.inventory[InventoryId.BlueBoomerang];

@@ -1,9 +1,8 @@
 import { createSelector } from 'reselect';
 import { StumpyState } from '../../reducers';
 
+import { wrap } from '../../../api/helpers';
 import InventoryId from '../../../api/inventory/inventory-id';
-
-import { wrap } from './';
 
 const getFlippers = ( state: StumpyState ) => state.inventory[InventoryId.Flippers];
 
