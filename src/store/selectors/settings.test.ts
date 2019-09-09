@@ -1,3 +1,4 @@
+// tslint:disable-next-line: no-implicit-dependencies
 import { Selector } from 'redux-testkit';
 
 import { StumpyState } from '../reducers';

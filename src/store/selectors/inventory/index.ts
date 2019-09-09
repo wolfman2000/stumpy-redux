@@ -1,4 +1,6 @@
-export function wrap( val: number, min: number, max: number ) {
+const wrap = ( val: number, min: number, max: number ): number => {
+
+// export function wrap( val: number, min: number, max: number ): number {
   if ( val < min ) {
     return max;
   }
@@ -6,4 +8,6 @@ export function wrap( val: number, min: number, max: number ) {
     return min;
   }
   return val;
-}
+};
+
+export { wrap };
