@@ -1,6 +1,6 @@
 import { Reducer } from 'redux-testkit';
 
-import { decrementInventory, doNothing, incrementInventory, setInventory } from '../actions';
+import { doNothing, setInventory } from '../actions';
 
 import { inventoryReducer } from './inventory';
 
@@ -15,33 +15,37 @@ describe( 'The inventory reducer', () => {
   it( 'should update the shovel upon receiving an increment command.', () => {
     const payload = {
       key: InventoryId.Shovel,
+      value: 1,
     };
 
-    const result = inventoryReducer( undefined, incrementInventory( payload ) );
+    const result = inventoryReducer( undefined, setInventory( payload ) );
 
-    expect( result[InventoryId.Shovel].current ).toEqual( 1 );
+    expect( result[InventoryId.Shovel] ).toEqual( 1 );
   } );
 
   it( 'should reset the shovel to unclaimed if two increment commands are passed.', () => {
-    const payload = {
+    const firstGo = inventoryReducer( undefined, setInventory( {
       key: InventoryId.Shovel,
-    };
+      value: 1,
+    } ) );
 
-    const firstGo = inventoryReducer( undefined, incrementInventory( payload ) );
+    const secondGo = inventoryReducer( firstGo, setInventory( {
+      key: InventoryId.Shovel,
+      value: 0,
+    } ) );
 
-    const secondGo = inventoryReducer( firstGo, incrementInventory( payload ) );
-
-    expect( secondGo[InventoryId.Shovel].current ).toEqual( 0 );
+    expect( secondGo[InventoryId.Shovel] ).toEqual( 0 );
   } );
 
   it( 'should update the shovel upon receiving a decrement command.', () => {
     const payload = {
       key: InventoryId.Shovel,
+      value: 1,
     };
 
-    const result = inventoryReducer( undefined, decrementInventory( payload ) );
+    const result = inventoryReducer( undefined, setInventory( payload ) );
 
-    expect( result[InventoryId.Shovel].current ).toEqual( 1 );
+    expect( result[InventoryId.Shovel] ).toEqual( 1 );
   } );
 
   it( 'should reset the shovel to unclaimed if two decrement commands are passed.', () => {
@@ -49,11 +53,17 @@ describe( 'The inventory reducer', () => {
       key: InventoryId.Shovel,
     };
 
-    const firstGo = inventoryReducer( undefined, decrementInventory( payload ) );
+    const firstGo = inventoryReducer( undefined, setInventory( {
+      key: InventoryId.Shovel,
+      value: 1,
+    } ) );
 
-    const secondGo = inventoryReducer( firstGo, decrementInventory( payload ) );
+    const secondGo = inventoryReducer( firstGo, setInventory( {
+      key: InventoryId.Shovel,
+      value: 0,
+    } ) );
 
-    expect( secondGo[InventoryId.Shovel].current ).toEqual( 0 );
+    expect( secondGo[InventoryId.Shovel] ).toEqual( 0 );
   } );
 
   it( 'should set the shovel arbitrarily if a value is passed in.', () => {
@@ -64,9 +74,12 @@ describe( 'The inventory reducer', () => {
 
     const firstGo = inventoryReducer( undefined, setInventory( payload ) );
 
-    const secondGo = inventoryReducer( firstGo, incrementInventory( payload ) );
+    const secondGo = inventoryReducer( firstGo, setInventory( {
+      key: InventoryId.Shovel,
+      value: 0,
+    } ) );
 
-    expect( firstGo[InventoryId.Shovel].current ).toEqual( 3 );
-    expect( secondGo[InventoryId.Shovel].current ).toEqual( 0 );
+    expect( firstGo[InventoryId.Shovel] ).toEqual( 3 );
+    expect( secondGo[InventoryId.Shovel] ).toEqual( 0 );
   } );
 } );

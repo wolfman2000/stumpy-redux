@@ -51,19 +51,6 @@ function getItemPool( state: StumpyState ): ItemPool {
   return state.settings.itemPool;
 }
 
-// TODO: Move these to constants.
-const settingTable = new Map<string, ( state: StumpyState ) => number>( [
-  [ 'glitches', getGlitches ],
-  [ 'dungeonItems', getDungeonItems ],
-  [ 'goal', getGoal ],
-  [ 'openTower', getOpenTower ],
-  [ 'ganonVulnerable', getGanonVulernable ],
-  [ 'gameType', getGameType ],
-  [ 'bossShuffle', getBossShuffle ],
-  [ 'swords', getSwords ],
-  [ 'itemPool', getItemPool ],
-] );
-
 export const isNoGlitches = createSelector(
   getGlitches,
   ( glitch ) => glitch === Glitches.None,
@@ -98,6 +85,19 @@ export const isExpertItemPool = createSelector(
   getItemPool,
   ( pool ) => pool === ItemPool.Expert,
 );
+
+// TODO: Move these to constants.
+const settingTable = new Map<string, ( state: StumpyState ) => number>( [
+  [ 'glitches', getGlitches ],
+  [ 'dungeonItems', getDungeonItems ],
+  [ 'goal', getGoal ],
+  [ 'openTower', getOpenTower ],
+  [ 'ganonVulnerable', getGanonVulernable ],
+  [ 'gameType', getGameType ],
+  [ 'bossShuffle', getBossShuffle ],
+  [ 'swords', getSwords ],
+  [ 'itemPool', getItemPool ],
+] );
 
 export const makeGetSetting = () => {
   return ( state: StumpyState, setting: string ): number => {

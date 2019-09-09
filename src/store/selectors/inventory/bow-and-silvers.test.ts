@@ -4,7 +4,7 @@ import InventoryId from '../../../api/inventory/inventory-id';
 
 import { StumpyState } from '../../reducers';
 
-import { hasBow, hasBowAndSilvers, hasSilverArrows } from '../inventory';
+import { hasBow, hasBowAndSilvers, hasSilverArrows } from './bow-and-silvers';
 
 describe( 'The bow and silver arrow related selectors', () => {
   it( 'can see if we have the bow by itself.', () => {
@@ -12,18 +12,8 @@ describe( 'The bow and silver arrow related selectors', () => {
       inventory: {},
     };
 
-    state.inventory![InventoryId.Bow] = {
-      active: 1,
-      current: 1,
-      id: InventoryId.Bow,
-      max: 1,
-    };
-    state.inventory![InventoryId.SilverArrows] = {
-      active: 1,
-      current: 0,
-      id: InventoryId.SilverArrows,
-      max: 1,
-    };
+    state.inventory![InventoryId.Bow] = 1;
+    state.inventory![InventoryId.SilverArrows] = 0;
 
     Selector( hasBow ).expect( state ).toReturn( true );
     Selector( hasSilverArrows ).expect( state ).toReturn( false );
@@ -35,18 +25,8 @@ describe( 'The bow and silver arrow related selectors', () => {
       inventory: {},
     };
 
-    state.inventory![InventoryId.Bow] = {
-      active: 1,
-      current: 0,
-      id: InventoryId.Bow,
-      max: 1,
-    };
-    state.inventory![InventoryId.SilverArrows] = {
-      active: 1,
-      current: 1,
-      id: InventoryId.SilverArrows,
-      max: 1,
-    };
+    state.inventory![InventoryId.Bow] = 0;
+    state.inventory![InventoryId.SilverArrows] = 1;
 
     Selector( hasBow ).expect( state ).toReturn( false );
     Selector( hasSilverArrows ).expect( state ).toReturn( true );
@@ -58,18 +38,8 @@ describe( 'The bow and silver arrow related selectors', () => {
       inventory: {},
     };
 
-    state.inventory![InventoryId.Bow] = {
-      active: 1,
-      current: 1,
-      id: InventoryId.Bow,
-      max: 1,
-    };
-    state.inventory![InventoryId.SilverArrows] = {
-      active: 1,
-      current: 1,
-      id: InventoryId.SilverArrows,
-      max: 1,
-    };
+    state.inventory![InventoryId.Bow] = 1;
+    state.inventory![InventoryId.SilverArrows] = 1;
 
     Selector( hasBow ).expect( state ).toReturn( true );
     Selector( hasSilverArrows ).expect( state ).toReturn( true );

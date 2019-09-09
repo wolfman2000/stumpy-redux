@@ -1,7 +1,5 @@
-import Item from './item';
-
 interface IInventoryMap {
-  [item: number]: Item;
+  [item: number]: number;
 }
 
 export default IInventoryMap;

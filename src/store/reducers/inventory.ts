@@ -11,29 +11,16 @@ const inventoryReducer = ( state: Inventory = fallbackInventory, action: StumpyA
   function produceState( draft: Inventory ): void {
     switch ( action.type ) {
       case getType( incrementInventory ): {
-        const item = draft[action.payload.key];
-        let current = item.current + 1;
-        if ( current > item.max ) {
-          current = 0;
-        }
-
-        item.current = current;
+        draft[action.payload.key] += 1;
         break;
       }
       case getType( decrementInventory ): {
-        const item = draft[action.payload.key];
-        let current = item.current - 1;
-        if ( current < 0 ) {
-          current = item.max;
-        }
-
-        item.current = current;
+        draft[action.payload.key] -= 1;
         break;
       }
       // TODO: Automatically derive the rest of this using selectors.
       case getType( setInventory ): {
-        const item = draft[action.payload.key];
-        item.current = action.payload.value;
+        draft[action.payload.key] = action.payload.value;
         break;
       }
     }
