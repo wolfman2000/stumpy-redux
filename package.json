@@ -1,0 +1,64 @@
+{
+  "name": "stumpy-redux",
+  "version": "0.1.0",
+  "description": "A flexible tracker for Link to the Past Randomizer using redux.",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wolfman2000/stumpy-redux.git"
+  },
+  "author": "wolfman2000",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wolfman2000/stumpy-redux/issues"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "cover": "npm run test -- --coverage --watchAll",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "immer": "^3.2.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "react-scripts": "3.1.1",
+    "redux": "^4.0.4",
+    "reselect": "^4.0.0",
+    "typesafe-actions": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.2",
+    "@types/redux": "^3.6.0",
+    "@types/redux-mock-store": "^1.0.1",
+    "@types/redux-testkit": "^1.0.3",
+    "babel-jest": "^24.9.0",
+    "enzyme": "^3.10.0",
+    "react-test-renderer": "^16.9.0",
+    "redux-mock-store": "^1.5.3",
+    "redux-testkit": "^1.0.6",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.19.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.6.2"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
