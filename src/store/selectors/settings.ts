@@ -4,6 +4,7 @@ import { StumpyState } from '../reducers';
 
 import DungeonItems from '../../api/settings/logic/dungeon-items';
 import Glitches from '../../api/settings/logic/glitches';
+import ItemPlacement from '../../api/settings/logic/item-placement';
 
 import GanonVulernable from '../../api/settings/goal/ganon-vulnerable';
 import Goal from '../../api/settings/goal/goal';
@@ -12,6 +13,7 @@ import OpenTower from '../../api/settings/goal/open-tower';
 import BossShuffle from '../../api/settings/gameplay/boss-shuffle';
 import GameType from '../../api/settings/gameplay/game-type';
 
+import ItemFunctionality from '../../api/settings/difficulty/item-functionality';
 import ItemPool from '../../api/settings/difficulty/item-pool';
 import Swords from '../../api/settings/difficulty/swords';
 
@@ -21,6 +23,10 @@ function getGlitches( state: StumpyState ): Glitches {
 
 function getDungeonItems( state: StumpyState ): DungeonItems {
   return state.settings.dungeonItems;
+}
+
+function getItemPlacement( state: StumpyState ): ItemPlacement {
+  return state.settings.itemPlacement;
 }
 
 function getGoal( state: StumpyState ): Goal {
@@ -50,6 +56,10 @@ function getSwords( state: StumpyState ): Swords {
 function getItemPool( state: StumpyState ): ItemPool {
   return state.settings.itemPool;
 }
+
+const getItemFunctionality = ( state: StumpyState ): ItemFunctionality => {
+  return state.settings.itemFunctionality;
+};
 
 export const isNoGlitches = createSelector(
   getGlitches,
@@ -86,10 +96,31 @@ export const isExpertItemPool = createSelector(
   ( pool ) => pool === ItemPool.Expert,
 );
 
+export const isNormalItemFunctionality = createSelector(
+  getItemFunctionality,
+  ( func ) => func === ItemFunctionality.Normal,
+);
+
+export const isHardItemFunctionality = createSelector(
+  getItemFunctionality,
+  ( func ) => func === ItemFunctionality.Hard,
+);
+
+export const isExpertItemFunctionality = createSelector(
+  getItemFunctionality,
+  ( func ) => func === ItemFunctionality.Expert,
+);
+
+export const isRestrictedItemPlacement = createSelector(
+  getItemPlacement,
+  ( restricted ) => restricted === ItemPlacement.Restricted,
+);
+
 // TODO: Move these to constants.
 const settingTable = new Map<string, ( state: StumpyState ) => number>( [
   [ 'glitches', getGlitches ],
   [ 'dungeonItems', getDungeonItems ],
+  [ 'itemPlacement', getItemPlacement ],
   [ 'goal', getGoal ],
   [ 'openTower', getOpenTower ],
   [ 'ganonVulnerable', getGanonVulernable ],
@@ -97,6 +128,7 @@ const settingTable = new Map<string, ( state: StumpyState ) => number>( [
   [ 'bossShuffle', getBossShuffle ],
   [ 'swords', getSwords ],
   [ 'itemPool', getItemPool ],
+  [ 'itemFunctionality', getItemFunctionality ],
 ] );
 
 export const makeGetSetting = () => {

@@ -1,16 +1,24 @@
 import { createSelector } from 'reselect';
 
-import { isSwordless } from '../settings';
+import {
+  isExpertItemFunctionality,
+  isHardItemFunctionality,
+  isNormalItemFunctionality,
+  isSwordless,
+} from '../settings';
 
 import { hasBomb } from './bomb';
 import { hasBombos } from './bombos';
 import { hasBlueBoomerang, hasRedBoomerang } from './boomerangs';
+import { getBottles } from './bottles';
 import { hasBow } from './bow-and-silvers';
 import { hasByrna } from './byrna';
+import { hasCape } from './cape';
 import { hasFireRod } from './fire-rod';
 import { hasHammer } from './hammer';
 import { hasIceRod } from './ice-rod';
 import { hasLantern } from './lantern';
+import { hasMagic } from './magic';
 import { hasSomaria } from './somaria';
 import { hasMasterSword, hasSword } from './swords';
 
@@ -84,4 +92,46 @@ export const hasProjectile = createSelector(
   hasSomaria,
   hasMasterSword, // at full health, this shoots a projectile.
   ( bow, bomb, boom, rod, somaria, sword ) => bow || bomb || boom || rod || somaria || sword,
+);
+
+export const getAvailableMagicBars = createSelector(
+  isExpertItemFunctionality,
+  isHardItemFunctionality,
+  hasMagic,
+  getBottles,
+  ( expert, hard, magic, bottles ) => {
+    // Start with your own magic.
+    const startingMagic = 1;
+
+    // Add the refills from bottles.
+    const bottlePotency = expert ? 0.25 : ( hard ? 0.5 : 1 );
+    const adjustedBottles = bottles * bottlePotency;
+    let normalCapacity = adjustedBottles + startingMagic;
+    if ( magic ) {
+      normalCapacity *= 2;
+    }
+    return normalCapacity;
+  },
+);
+
+export const hasTwoMagicBars = createSelector(
+  getAvailableMagicBars,
+  ( magic ) => magic >= 2,
+);
+
+export const hasThreeMagicBars = createSelector(
+  getAvailableMagicBars,
+  ( magic ) => magic >= 3,
+);
+
+export const hasFireballInvulnerabilty = createSelector(
+  isNormalItemFunctionality,
+  hasCape,
+  hasByrna,
+  ( normal, cape, byrna ) => {
+    if ( normal && byrna ) {
+      return true;
+    }
+    return cape;
+  },
 );

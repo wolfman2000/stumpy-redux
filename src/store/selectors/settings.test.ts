@@ -11,32 +11,13 @@ import {
   makeGetSetting,
 } from './settings';
 
-import BossShuffle from '../../api/settings/gameplay/boss-shuffle';
 import GameType from '../../api/settings/gameplay/game-type';
 
-import DungeonItems from '../../api/settings/logic/dungeon-items';
-import Glitches from '../../api/settings/logic/glitches';
-
-import GanonVulernable from '../../api/settings/goal/ganon-vulnerable';
-import Goal from '../../api/settings/goal/goal';
-import OpenTower from '../../api/settings/goal/open-tower';
-
-import ItemPool from '../../api/settings/difficulty/item-pool';
-import Swords from '../../api/settings/difficulty/swords';
+import { fallbackSettings } from '../../api/settings';
 
 describe( 'The settings selectors', () => {
   const state: Partial<StumpyState> = {
-    settings: {
-      bossShuffle: BossShuffle.None,
-      dungeonItems: DungeonItems.Standard,
-      gameType: GameType.Open,
-      ganonVulernable: GanonVulernable.Seven,
-      glitches: Glitches.None,
-      goal: Goal.DefeatGanon,
-      itemPool: ItemPool.Normal,
-      openTower: OpenTower.Seven,
-      swords: Swords.Assured,
-    },
+    settings: fallbackSettings,
   };
 
   it( 'can confirm if we are not requiring glitches.', () => {
