@@ -116,6 +116,21 @@ export const isRestrictedItemPlacement = createSelector(
   ( restricted ) => restricted === ItemPlacement.Restricted,
 );
 
+export const areMapsCompassesShuffled = createSelector(
+  getDungeonItems,
+  ( item ) => item !== DungeonItems.Standard,
+);
+
+export const areSmallKeysShuffled = createSelector(
+  getDungeonItems,
+  ( item ) => item === DungeonItems.Mcs || item === DungeonItems.Full,
+);
+
+export const areBigKeysShuffled = createSelector(
+  getDungeonItems,
+  ( item ) => item === DungeonItems.Full,
+);
+
 // TODO: Move these to constants.
 const settingTable = new Map<string, ( state: StumpyState ) => number>( [
   [ 'glitches', getGlitches ],
