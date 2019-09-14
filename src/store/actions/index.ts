@@ -1,6 +1,7 @@
 import { ActionType, createStandardAction } from 'typesafe-actions';
 import { DungeonId } from '../../api/dungeon/dungeon-id';
 import InventoryId from '../../api/inventory/inventory-id';
+import NodeId from '../../api/traversal/nodes/node-id';
 
 interface IInventoryKey {
   key: InventoryId;
@@ -17,6 +18,7 @@ const DUNGEON_SET_BOSS_DEAD = 'dungeon/SET_BOSS_DEAD';
 const DUNGEON_SET_BOSS_ID = 'dungeon/SET_BOSS_ID';
 const DUNGEON_SET_MEDALLION = 'dungeon/SET_MEDALLION';
 const DUNGEON_SET_REWARD = 'dungeon/SET_REWARD';
+const EDGE_SET_TARGET = 'edge/SET_TARGET';
 
 export const updateSettings = createStandardAction( SETTING_UPDATE )<{
   key: string,
@@ -30,6 +32,12 @@ export const decrementInventory = createStandardAction( INVENTORY_DECREMENT )<II
 export const setInventory = createStandardAction( INVENTORY_SET )<{
   key: InventoryId,
   value: number,
+}>();
+
+export const setEdge = createStandardAction( EDGE_SET_TARGET )<{
+  key: NodeId,
+  oldValue: NodeId,
+  newValue: NodeId,
 }>();
 
 export const doNothing = createStandardAction( 'do/NOTHING' )();
@@ -72,4 +80,5 @@ export type StumpyAction =
   ActionType<typeof dungeonSetMedallion> |
   ActionType<typeof dungeonSetReward> |
   ActionType<typeof dungeonSetSmallKey> |
+  ActionType<typeof setEdge> |
   doNothingType;

@@ -3,18 +3,21 @@ import { Selector } from 'redux-testkit';
 
 import { StumpyState } from '../../../reducers';
 
+import { fallbackDungeonMaps } from '../../../../api/dungeon';
+import { DungeonId } from '../../../../api/dungeon/dungeon-id';
 import InventoryId from '../../../../api/inventory/inventory-id';
 import { fallbackSettings } from '../../../../api/settings';
-
-import { canDefeatVitreous } from '.';
 import ItemPool from '../../../../api/settings/difficulty/item-pool';
 import ItemPlacement from '../../../../api/settings/logic/item-placement';
+
+import { makeCanDefeatBoss } from '.';
 
 describe( 'The boss Vitreous', () => {
   let state: Partial<StumpyState>;
 
   beforeEach( () => {
     state = {
+      dungeons: fallbackDungeonMaps,
       inventory: {},
       settings: fallbackSettings,
     };
@@ -26,19 +29,19 @@ describe( 'The boss Vitreous', () => {
     } );
 
     it( 'cannot be beaten if there is no equipment on hand.', () => {
-      Selector( canDefeatVitreous ).expect( state ).toReturn( false );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.MiseryMire ).toReturn( false );
     } );
 
     it( 'can be beaten with the master sword.', () => {
       state.inventory![InventoryId.Sword] = 2;
 
-      Selector( canDefeatVitreous ).expect( state ).toReturn( true );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.MiseryMire ).toReturn( true );
     } );
 
     it( 'can be beaten with the bow.', () => {
       state.inventory![InventoryId.Bow] = 1;
 
-      Selector( canDefeatVitreous ).expect( state ).toReturn( true );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.MiseryMire ).toReturn( true );
     } );
   } );
 
@@ -48,27 +51,27 @@ describe( 'The boss Vitreous', () => {
     } );
 
     it( 'cannot be beaten if there is no equipment on hand.', () => {
-      Selector( canDefeatVitreous ).expect( state ).toReturn( false );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.MiseryMire ).toReturn( false );
     } );
 
     it( 'can be beaten with the hammer.', () => {
       state.inventory![InventoryId.Hammer] = 1;
 
-      Selector( canDefeatVitreous ).expect( state ).toReturn( true );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.MiseryMire ).toReturn( true );
     } );
 
     it( 'can be beaten with bombs in normal difficulty pools only.', () => {
       state.inventory![InventoryId.Bomb] = 1;
       state.settings!.itemPool = ItemPool.Normal;
 
-      Selector( canDefeatVitreous ).expect( state ).toReturn( true );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.MiseryMire ).toReturn( true );
     } );
 
     it( 'cannot be beaten with bombs in hard difficulty pools.', () => {
       state.inventory![InventoryId.Bomb] = 1;
       state.settings!.itemPool = ItemPool.Hard;
 
-      Selector( canDefeatVitreous ).expect( state ).toReturn( false );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.MiseryMire ).toReturn( false );
     } );
   } );
 } );

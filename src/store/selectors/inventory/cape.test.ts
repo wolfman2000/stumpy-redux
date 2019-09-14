@@ -6,6 +6,10 @@ import InventoryId from '../../../api/inventory/inventory-id';
 import { StumpyState } from '../../reducers';
 
 import { hasCape, nextCape, prevCape } from './cape';
+import { canBreakCastleTowerBarrier } from './helpers';
+
+import { fallbackInventory } from '../../../api/inventory';
+import { fallbackSettings } from '../../../api/settings';
 
 describe( 'The cape based selectors', () => {
   it( 'can see if we have the cape.', () => {
@@ -56,5 +60,22 @@ describe( 'The cape based selectors', () => {
     state.inventory![InventoryId.Cape] = 1;
 
     Selector( prevCape ).expect( state ).toReturn( 0 );
+  } );
+} );
+
+describe( 'The cape itself', () => {
+  let state: Partial<StumpyState>;
+
+  beforeEach( () => {
+    state = {
+      inventory: fallbackInventory,
+      settings: fallbackSettings,
+    };
+  } );
+
+  it( 'can go past the castle tower barrier.', () => {
+    state.inventory![InventoryId.Cape] = 1;
+
+    Selector( canBreakCastleTowerBarrier ).expect( state ).toReturn( true );
   } );
 } );

@@ -3,56 +3,59 @@ import { Selector } from 'redux-testkit';
 
 import { StumpyState } from '../../../reducers';
 
+import { fallbackDungeonMaps } from '../../../../api/dungeon';
+import { DungeonId } from '../../../../api/dungeon/dungeon-id';
 import InventoryId from '../../../../api/inventory/inventory-id';
 import { fallbackSettings } from '../../../../api/settings';
-
-import { canDefeatHelmasaurKing } from '.';
 import ItemPlacement from '../../../../api/settings/logic/item-placement';
+
+import { makeCanDefeatBoss } from '.';
 
 describe( 'The boss Helmasaur King', () => {
   let state: Partial<StumpyState>;
 
   beforeEach( () => {
     state = {
+      dungeons: fallbackDungeonMaps,
       inventory: {},
       settings: fallbackSettings,
     };
   } );
 
   it( 'cannot be beaten if there is no equipment on hand.', () => {
-    Selector( canDefeatHelmasaurKing ).expect( state ).toReturn( false );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( false );
   } );
 
   it( 'cannot be beaten with a sword alone.', () => {
     state.inventory![InventoryId.Sword] = 3;
 
-    Selector( canDefeatHelmasaurKing ).expect( state ).toReturn( false );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( false );
   } );
 
   it( 'cannot be beaten with bombs alone.', () => {
     state.inventory![InventoryId.Bomb] = 1;
 
-    Selector( canDefeatHelmasaurKing ).expect( state ).toReturn( false );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( false );
   } );
 
   it( 'can be beaten with a hammer alone.', () => {
     state.inventory![InventoryId.Hammer] = 1;
 
-    Selector( canDefeatHelmasaurKing ).expect( state ).toReturn( true );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( true );
   } );
 
   it( 'can be beaten with a hammer and a sword.', () => {
     state.inventory![InventoryId.Hammer] = 1;
     state.inventory![InventoryId.Sword] = 1;
 
-    Selector( canDefeatHelmasaurKing ).expect( state ).toReturn( true );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( true );
   } );
 
   it( 'can be beaten with a hammer and a bow.', () => {
     state.inventory![InventoryId.Hammer] = 1;
     state.inventory![InventoryId.Bow] = 1;
 
-    Selector( canDefeatHelmasaurKing ).expect( state ).toReturn( true );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( true );
   } );
 
   it( 'can be beaten (expectedly) with a hammer and Master Sword.', () => {
@@ -60,6 +63,6 @@ describe( 'The boss Helmasaur King', () => {
     state.inventory![InventoryId.Sword] = 2;
     state.settings!.itemPlacement = ItemPlacement.Restricted;
 
-    Selector( canDefeatHelmasaurKing ).expect( state ).toReturn( true );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( true );
   } );
 } );

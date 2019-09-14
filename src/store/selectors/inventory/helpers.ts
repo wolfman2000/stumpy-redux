@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import {
   isExpertItemFunctionality,
   isHardItemFunctionality,
+  isInverted,
   isNormalItemFunctionality,
   isSwordless,
 } from '../settings';
@@ -82,6 +83,19 @@ export const hasEitherBoomerang = createSelector(
   hasBlueBoomerang,
   hasRedBoomerang,
   ( blue, red ) => blue || red,
+);
+
+export const canBreakCastleTowerBarrier = createSelector(
+  isSwordless,
+  hasCape,
+  hasMasterSword,
+  hasHammer,
+  ( less, cape, sword, hammer ) => {
+    if ( cape ) {
+      return true;
+    }
+    return less ? hammer : sword;
+  },
 );
 
 export const hasProjectile = createSelector(

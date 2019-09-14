@@ -9,22 +9,6 @@ export interface IZeldaDungeonMap {
   [x: number]: ZeldaDungeon;
 }
 
-interface IDungeonMap {
-  hyruleCastle: HyruleCastle;
-  castleTower: CastleTower;
-  easternPalace: EasternPalace;
-  desertPalace: CommonDungeon;
-  towerOfHera: CommonDungeon;
-  palaceOfDarkness: CommonDungeon;
-  swampPalace: CommonDungeon;
-  skullWoods: CommonDungeon;
-  thievesTown: CommonDungeon;
-  icePalace: CommonDungeon;
-  miseryMire: MedallionDungeon;
-  turtleRock: MedallionDungeon;
-  ganonsTower: GanonsTower;
-}
-
 const fallbackDungeonMaps: IZeldaDungeonMap = {};
 fallbackDungeonMaps[DungeonId.HyruleCastle] = {
   chestsOpened: 0,
