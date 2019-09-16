@@ -14,7 +14,7 @@ import InventoryId from '../../../api/inventory/inventory-id';
 import Swords from '../../../api/settings/difficulty/swords';
 
 import { fallbackNodes } from '../../../api/traversal';
-import { available, unavailable } from '../../../api/traversal/availabilities';
+import { available, unavailable, visible } from '../../../api/traversal/availabilities';
 import Availability from '../../../api/traversal/availabilities/availability';
 import AvailabilityLogic from '../../../api/traversal/availabilities/availability-logic';
 import { fallbackEdges } from '../../../api/traversal/edges';
@@ -101,6 +101,13 @@ describe( 'The light world', () => {
     state.inventory![InventoryId.Flippers] = 1;
 
     Selector( makeGetAccessibility() ).expect( state, NodeId.LIGHT_B8_ZORA_LEDGE ).toReturn( available );
+  } );
+
+  it( 'has a visible zora ledge item with the gloves.', () => {
+    state.inventory![InventoryId.Flippers] = 0;
+    state.inventory![InventoryId.Glove] = 1;
+
+    Selector( makeGetAccessibility() ).expect( state, NodeId.LIGHT_ZORA_LEDGE_ITEM ).toReturn( visible );
   } );
 
   it( 'has an accessible King Zora with the gloves.', () => {

@@ -1,6 +1,7 @@
 enum NodeConnectionId {
   // De facto.
   Always,
+  AlwaysVisible,
 
   // Pure Settings
   IsInverted,

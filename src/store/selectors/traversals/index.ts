@@ -4,21 +4,23 @@ import traversalTable from './table';
 
 import { StumpyState } from '../../reducers';
 
-import { unavailable } from '../../../api/traversal/availabilities';
-import Availability from '../../../api/traversal/availabilities/availability';
+import {
+  available,
+  availableWithGlitches,
+  possible,
+  possibleWithGlitches,
+  unavailable,
+  visible,
+  visibleWithGlitches,
+} from '../../../api/traversal/availabilities';
 import AvailabilityLogic from '../../../api/traversal/availabilities/availability-logic';
-import AvailabilityMap from '../../../api/traversal/availabilities/availability-map';
 import Edge from '../../../api/traversal/edges/edge';
 import NodeConnectionId from '../../../api/traversal/nodes/node-connection-id';
 import NodeId from '../../../api/traversal/nodes/node-id';
 
 const getEdges = ( state: StumpyState ) => state.edges;
 
-const getNodes = ( state: StumpyState ) => state.nodes;
-
 export const getState = ( _: StumpyState ) => _; // Identity.
-
-const getNodeId = ( _: StumpyState, id: NodeId ) => id;
 
 interface INodeConnection {
   canConnect: NodeConnectionId;
@@ -30,83 +32,169 @@ interface INodeData {
   connections: INodeConnection[];
 }
 
-interface INodeMap {
-  [id: number]: INodeConnection[]; // INodeData;
+interface ISimpleNodeMap {
+  [id: number]: NodeId[];
 }
 
-const generateFullGraph = ( edges: Edge[], nodes: NodeId[] ) => {
-  const graph: INodeMap = {};
-  nodes.forEach( ( n ) => {
-    const matchingEdges = edges
-      .filter( ( e ) => e.from === n )
-      .map( ( e ): INodeConnection => {
-        return {
-          canConnect: e.canTraverse,
-          node: e.to,
-        };
-      } )
-      ;
-    graph[n] = matchingEdges;
+const generateLimitedGraph = (
+  state: StumpyState,
+  edges: Edge[],
+  allowedAvailabilities: AvailabilityLogic[],
+) => {
+  const graph: ISimpleNodeMap = {};
+
+  edges.forEach( ( e ) => {
+    const availability = traversalTable.has( e.canTraverse )
+      ? ( traversalTable.get( e.canTraverse )!( state ) || unavailable )
+      : unavailable;
+
+    const isMatchingAvailability = ( a: AvailabilityLogic ): boolean => {
+      return a.availability === availability.availability &&
+        a.usesGlitches === availability.usesGlitches;
+    };
+
+    if ( allowedAvailabilities.some( isMatchingAvailability ) ) {
+      if ( !graph[e.from] ) {
+        graph[e.from] = [e.to];
+      } else {
+        graph[e.from].push( e.to );
+      }
+    }
   } );
+
   return graph;
 };
 
-export const getFullGraph = createSelector(
+const generateAccessibleGraph = ( state: StumpyState, edges: Edge[] ) => {
+  return generateLimitedGraph( state, edges, [available] );
+};
+
+const generateVisibleGraph = ( state: StumpyState, edges: Edge[] ) => {
+  return generateLimitedGraph( state, edges, [available, visible ] );
+};
+
+const generatePossibleGraph = ( state: StumpyState, edges: Edge[] ) => {
+  return generateLimitedGraph( state, edges, [available, visible, possible] );
+};
+
+const generateAccessibleGlitchGraph = ( state: StumpyState, edges: Edge[] ) => {
+  return generateLimitedGraph(
+    state,
+    edges,
+    [available, availableWithGlitches],
+  );
+};
+
+const generateVisibleGlitchGraph = ( state: StumpyState, edges: Edge[] ) => {
+  return generateLimitedGraph(
+    state,
+    edges,
+    [available, availableWithGlitches, visible, visibleWithGlitches],
+  );
+};
+
+const generatePossibleGlitchGraph = ( state: StumpyState, edges: Edge[] ) => {
+  return generateLimitedGraph(
+    state,
+    edges,
+    [available, availableWithGlitches, visible, visibleWithGlitches, possible, possibleWithGlitches],
+  );
+};
+
+export const getFullAccessibleGraph = createSelector(
+  getState,
   getEdges,
-  getNodes,
-  generateFullGraph,
+  generateAccessibleGraph,
 );
 
-const getAccessibility = createSelector(
+export const getFullVisibleGraph = createSelector(
   getState,
-  getNodeId,
-  ( state, targetNode ): AvailabilityLogic => {
-    const graph = getFullGraph( state );
-    const visited: AvailabilityMap = {};
-    let finalAccessibility: AvailabilityLogic | null = null;
+  getEdges,
+  generateVisibleGraph,
+);
 
-    // tslint:disable-next-line: variable-name
-    const _util = ( currentNodeId: NodeId ) => {
-      if ( !!finalAccessibility ) {
-        return;
+export const getFullPossibleGraph = createSelector(
+  getState,
+  getEdges,
+  generatePossibleGraph,
+);
+
+export const getGlitchedAccessibleGraph = createSelector(
+  getState,
+  getEdges,
+  generateAccessibleGlitchGraph,
+);
+
+export const getGlitchedVisibleGraph = createSelector(
+  getState,
+  getEdges,
+  generateVisibleGlitchGraph,
+);
+
+export const getGlitchedPossibleGraph = createSelector(
+  getState,
+  getEdges,
+  generatePossibleGlitchGraph,
+);
+
+export const isNodeOnGraph = ( graph: ISimpleNodeMap, targetNode: NodeId ): boolean => {
+  const visited: NodeId[] = [];
+  let finalAccessibility: boolean | null = null;
+
+  // tslint:disable-next-line: variable-name
+  const _util = ( currentNodeId: NodeId ) => {
+    if ( !!finalAccessibility ) {
+      return;
+    }
+
+    const nodeData = graph[currentNodeId];
+    if ( !nodeData ) {
+      return; // Not defined in the graph. Don't crash.
+    }
+
+    const eachConnection = ( n: NodeId ) => {
+      if ( visited.some( ( t ) => t === n ) ) {
+        return; // No need to revisit.
       }
 
-      const nodeData = graph[currentNodeId];
-      if ( !nodeData ) {
-        return; // Not defined in the graph. Don't crash.
+      if ( n === targetNode ) {
+        finalAccessibility = true;
+      } else {
+        visited.push( n );
+        _util( n );
       }
-
-      const eachConnection = ( n: INodeConnection ) => {
-        if ( visited[n.node] ) {
-          return; // No need to revisit.
-        }
-
-        const accessibility = traversalTable.has( n.canConnect )
-          ? traversalTable.get( n.canConnect )!( state )
-          : unavailable;
-
-        if ( accessibility.availability !== Availability.Unavailable ) {
-          if ( n.node === targetNode ) {
-            finalAccessibility = accessibility;
-          } else {
-            visited[n.node] = accessibility;
-            _util( n.node );
-          }
-        }
-      };
-
-      nodeData.forEach( eachConnection );
     };
 
-    _util( NodeId.Menu );
+    nodeData.forEach( eachConnection );
+  };
 
-    return !!finalAccessibility ? finalAccessibility : unavailable;
-  },
-);
+  _util( NodeId.Menu );
+
+  return !!finalAccessibility;
+};
 
 export const makeGetAccessibility = () => {
   return ( state: StumpyState, nodeId: NodeId ): AvailabilityLogic => {
-    return getAccessibility( state, nodeId );
+    if ( isNodeOnGraph( getFullAccessibleGraph( state ), nodeId ) ) {
+      return available;
+    }
+    if ( isNodeOnGraph( getFullVisibleGraph( state ), nodeId ) ) {
+      return visible;
+    }
+    if ( isNodeOnGraph( getFullPossibleGraph( state ), nodeId ) ) {
+      return possible;
+    }
+    if ( isNodeOnGraph( getGlitchedAccessibleGraph( state ), nodeId ) ) {
+      return availableWithGlitches;
+    }
+    if ( isNodeOnGraph( getGlitchedVisibleGraph( state ), nodeId ) ) {
+      return visibleWithGlitches;
+    }
+    if ( isNodeOnGraph( getGlitchedPossibleGraph( state ), nodeId ) ) {
+      return possibleWithGlitches;
+    }
+
+    return unavailable;
   };
   /*
   return createSelector(

@@ -3,7 +3,10 @@ enum NodeId {
   StartingHouse = 10,
 
   // Light World sections.
-  LIGHT_A1 = 2110, // Forest screen, 2x2
+  LIGHT_A1_NW = 2110, // Forest screen, 2x2, NW part
+  LIGHT_A1_NE = 2115, // NE part
+  LIGHT_A1_SW = 2120, // SW part
+  LIGHT_A1_SE = 2125, // SE part
   LIGHT_A3 = 2130, // Lumberjack screen, 1x1
   LIGHT_A4 = 2140, // Death mountain, 2x2
   LIGHT_A4_LOWER = 2142, // Lower part of A4. Most connections.
@@ -115,7 +118,11 @@ enum NodeId {
   LIGHT_H8_WATER = 2885, // the water below
 
   // Dark World sections.
-  DARK_A1 = 3110, // Dead Woods. 2x2
+
+  DARK_A1_NW = 3110, // Skull Woods, 2x2, NW part
+  DARK_A1_NE = 3115, // NE part
+  DARK_A1_SW = 3120, // SW part
+  DARK_A1_SE = 3125, // SE part
   DARK_A3 = 3130, // ex-lumberjacks. 1x1
   DARK_A4 = 3140, // Ganon's Tower. 2x2
   DARK_A4_LOWER = 3142,
@@ -223,7 +230,7 @@ enum NodeId {
   DARK_H8_WATER = 3885, // the water below
 
   // Light world A1 connections
-  LIGHT_FOREST_GAME = 1000,
+  LIGHT_FOREST_GAME_ENTRANCE = 1000,
   LIGHT_MASTER_SWORD_PEDESTAL = 1001,
   LIGHT_MUSHROOM_SPOT = 1002,
   LIGHT_FOREST_HIDEOUT_ENTRANCE = 1003,

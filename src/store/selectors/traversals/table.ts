@@ -25,8 +25,12 @@ import { hasShovel } from '../inventory/shovel';
 import { hasMasterSword } from '../inventory/swords';
 
 const always = ( _: StumpyState ): IAvailabilityLogic => {
+  return available;
+};
+
+const alwaysVisible = ( _: StumpyState ): IAvailabilityLogic => {
   return {
-    availability: Availability.Available,
+    availability: Availability.Visible,
     usesGlitches: false,
   };
 };
@@ -318,6 +322,8 @@ const canGetItemsAfterWaterfall = createSelector(
 
 const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => IAvailabilityLogic>( [
   [ NodeConnectionId.Always, always ],
+  [ NodeConnectionId.AlwaysVisible, alwaysVisible ],
+
   [ NodeConnectionId.IsInverted, isInvertedMode ],
   [ NodeConnectionId.IsNotInverted, isNotInvertedMode ],
 
