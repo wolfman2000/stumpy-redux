@@ -3,36 +3,39 @@ import { Selector } from 'redux-testkit';
 
 import { StumpyState } from '../../../reducers';
 
+import { fallbackDungeonMaps } from '../../../../api/dungeon';
+import { DungeonId } from '../../../../api/dungeon/dungeon-id';
 import InventoryId from '../../../../api/inventory/inventory-id';
 import { fallbackSettings } from '../../../../api/settings';
-
-import { canDefeatTrinexx } from '.';
 import ItemPlacement from '../../../../api/settings/logic/item-placement';
+
+import { makeCanDefeatBoss } from '.';
 
 describe( 'The boss Trinexx', () => {
   let state: Partial<StumpyState>;
 
   beforeEach( () => {
     state = {
+      dungeons: fallbackDungeonMaps,
       inventory: {},
       settings: fallbackSettings,
     };
   } );
 
   it( 'cannot be beaten if there is no equipment on hand.', () => {
-    Selector( canDefeatTrinexx ).expect( state ).toReturn( false );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( false );
   } );
 
   it( 'cannot be beaten with fire alone.', () => {
     state.inventory![InventoryId.FireRod] = 1;
 
-    Selector( canDefeatTrinexx ).expect( state ).toReturn( false );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( false );
   } );
 
   it( 'cannot be beaten with ice alone.', () => {
     state.inventory![InventoryId.IceRod] = 1;
 
-    Selector( canDefeatTrinexx ).expect( state ).toReturn( false );
+    Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( false );
   } );
 
   describe( '', () => {
@@ -42,7 +45,7 @@ describe( 'The boss Trinexx', () => {
     } );
 
     it( 'needs more than both elemental rods.', () => {
-      Selector( canDefeatTrinexx ).expect( state ).toReturn( false );
+      Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( false );
     } );
 
     describe( '', () => {
@@ -51,7 +54,7 @@ describe( 'The boss Trinexx', () => {
       } );
 
       it( 'can be taken out with any melee weapon when not restricted.', () => {
-        Selector( canDefeatTrinexx ).expect( state ).toReturn( true );
+        Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( true );
       } );
 
       describe( '', () => {
@@ -60,17 +63,17 @@ describe( 'The boss Trinexx', () => {
         } );
 
         it( 'cannot be taken out by master sword alone when restricted.', () => {
-          Selector( canDefeatTrinexx ).expect( state ).toReturn( false );
+          Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( false );
         } );
 
         it( 'can be taken out with the tempered sword while restricted.', () => {
           state.inventory![InventoryId.Sword] = 3;
-          Selector( canDefeatTrinexx ).expect( state ).toReturn( true );
+          Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( true );
         } );
 
         it( 'can be taken out with the master sword & extra magic while restricted.', () => {
           state.inventory![InventoryId.Bottle] = 1;
-          Selector( canDefeatTrinexx ).expect( state ).toReturn( true );
+          Selector( makeCanDefeatBoss() ).expect( state, DungeonId.TurtleRock ).toReturn( true );
         } );
       } );
     } );

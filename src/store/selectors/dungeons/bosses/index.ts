@@ -2,8 +2,10 @@ import { createSelector } from 'reselect';
 
 import { StumpyState } from '../../../reducers';
 
-import { IChangingBossDungeon } from '../../../../api/dungeon/dungeon';
+import { ZeldaDungeon } from '../../../../api/dungeon';
+import { IBossDungeon, IChangingBossDungeon } from '../../../../api/dungeon/dungeon';
 import { DungeonId } from '../../../../api/dungeon/dungeon-id';
+import { Reward } from '../../../../api/dungeon/reward';
 
 import {
   hasEitherBoomerang,
@@ -352,6 +354,81 @@ export const canDefeatGanon = createSelector(
   },
 );
 
+const allDungeons = ( _: StumpyState ): ZeldaDungeon[] => {
+  const keys = Object.keys( _.dungeons ).map( ( k ) => Number.parseInt( k, 10 ) );
+  const dungeons = keys.map( ( d ) => _.dungeons[d] );
+  return dungeons;
+};
+
+const rewardDungeons = createSelector(
+  allDungeons,
+  ( dungeons ) => {
+    return dungeons
+      .map( ( d ) => d as IChangingBossDungeon )
+      .filter( ( d ) => d.bossId > DungeonId.CastleTower && d.bossId < DungeonId.GanonsTower );
+  },
+);
+
+const beatenRewardDungeons = createSelector(
+  rewardDungeons,
+  ( dungeons ) => dungeons.filter( ( d ) => d.isBossDefeated ),
+);
+
+const hasAllRewardDungeonsBeaten = createSelector(
+  beatenRewardDungeons,
+  ( dungeons ) => dungeons.length === 10,
+);
+
+export const hasAllPendants = createSelector(
+  beatenRewardDungeons,
+  hasAllRewardDungeonsBeaten,
+  ( dungeons, done ) => {
+    if ( done ) {
+      return true;
+    }
+
+    return dungeons.filter( ( d ) => d.reward === Reward.Pendant || d.reward === Reward.GreenPendant ).length === 3;
+  },
+);
+
+export const hasAllCrystals = createSelector(
+  beatenRewardDungeons,
+  hasAllRewardDungeonsBeaten,
+  ( dungeons, done ) => {
+    if ( done ) {
+      return true;
+    }
+
+    return dungeons.filter( ( d ) => d.reward === Reward.Crystal || d.reward === Reward.PyramidCrystal ).length === 7;
+  },
+);
+
+export const hasGreenPendant = createSelector(
+  beatenRewardDungeons,
+  hasAllPendants,
+  hasAllRewardDungeonsBeaten,
+  ( dungeons, pendants, done ) => {
+    if ( done || pendants ) {
+      return true;
+    }
+
+    return dungeons.some( ( d ) => d.reward === Reward.GreenPendant );
+  },
+);
+
+export const hasAllPyramidCrystals = createSelector(
+  beatenRewardDungeons,
+  hasAllCrystals,
+  hasAllRewardDungeonsBeaten,
+  ( dungeons, crystals, done ) => {
+    if ( done || crystals ) {
+      return true;
+    }
+
+    return dungeons.filter( ( d ) => d.reward === Reward.PyramidCrystal ).length === 2;
+  },
+);
+
 export const makeCanDefeatBoss = () => {
   return ( state: StumpyState, dungeonId: DungeonId ): boolean => {
     if ( dungeonId === DungeonId.CastleTower || dungeonId === DungeonId.GanonsTower ) {
@@ -382,5 +459,17 @@ export const makeCanDefeatBoss = () => {
       default:
         return false;
     }
+  };
+};
+
+export const isCastleTowerDefeated = ( state: StumpyState ) => {
+  const castleTower = ( state.dungeons[DungeonId.CastleTower] as IBossDungeon );
+  return castleTower && castleTower.isBossDefeated;
+};
+
+export const makeIsBossDefeated = () => {
+  return ( state: StumpyState, dungeonId: DungeonId ): boolean => {
+    const dungeon = state.dungeons[dungeonId] as IBossDungeon;
+    return dungeon.isBossDefeated;
   };
 };
