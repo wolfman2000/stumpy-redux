@@ -14,9 +14,7 @@ import InventoryId from '../../../api/inventory/inventory-id';
 import Swords from '../../../api/settings/difficulty/swords';
 
 import { fallbackNodes } from '../../../api/traversal';
-import { available, unavailable, visible } from '../../../api/traversal/availabilities';
-import Availability from '../../../api/traversal/availabilities/availability';
-import AvailabilityLogic from '../../../api/traversal/availabilities/availability-logic';
+import { available, availableWithGlitches, unavailable, visible } from '../../../api/traversal/availabilities';
 import { fallbackEdges } from '../../../api/traversal/edges';
 import NodeId from '../../../api/traversal/nodes/node-id';
 
@@ -34,9 +32,9 @@ describe( 'The light world', () => {
   } );
 
   it( 'has the lake hylia water accessible via fake flippering.', () => {
-    const glitched = Selector( makeGetAccessibility() ).execute( state, NodeId.LIGHT_G6_WATER ) as AvailabilityLogic;
-    expect( glitched.availability ).toBe( Availability.Available );
-    expect( glitched.usesGlitches ).toBeTruthy();
+    state.inventory![InventoryId.Flippers] = 0;
+
+    Selector( makeGetAccessibility() ).expect( state, NodeId.LIGHT_G6_WATER ).toReturn( availableWithGlitches );
   } );
 
   it( 'has the lake hylia water accessible via actual flippering.', () => {
