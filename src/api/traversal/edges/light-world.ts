@@ -5,15 +5,32 @@ import NodeId from '../nodes/node-id';
 import Edge from './edge';
 
 const lightWorldEdges: Edge[] = [
-  // Lost A1, Lost woods screen transitions.
-  makeEdge( NodeId.LIGHT_A1, NodeId.LIGHT_A3, NodeConnectionId.Always ),
-  makeEdge( NodeId.LIGHT_A1, NodeId.LIGHT_C1_WEST, NodeConnectionId.Always ),
-  makeEdge( NodeId.LIGHT_A1, NodeId.LIGHT_C1_NE, NodeConnectionId.Always ),
-  makeEdge( NodeId.LIGHT_A1, NodeId.LIGHT_C2, NodeConnectionId.Always ),
-  makeEdge( NodeId.LIGHT_A1, NodeId.DARK_A1, NodeConnectionId.HasMirrorInverted ),
+  // Light A1, Lost woods screen transitions.
+  makeEdge( NodeId.LIGHT_A1_NW, NodeId.LIGHT_A1_NE, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_NW, NodeId.LIGHT_A1_SW, NodeConnectionId.Always ),
+  // TODO: Fix Master Sword Pedestal logic.
+  makeEdge( NodeId.LIGHT_A1_NW, NodeId.LIGHT_MASTER_SWORD_PEDESTAL, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_NW, NodeId.DARK_A1_NW, NodeConnectionId.HasMirrorInverted ),
+
+  makeEdge( NodeId.LIGHT_A1_NE, NodeId.LIGHT_A3, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_NE, NodeId.LIGHT_A1_SE, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_NE, NodeId.LIGHT_FOREST_GAME_ENTRANCE, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_NE, NodeId.LIGHT_MUSHROOM_SPOT, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_NE, NodeId.DARK_A1_NE, NodeConnectionId.HasMirrorInverted ),
+
+  makeEdge( NodeId.LIGHT_A1_SW, NodeId.LIGHT_A1_NW, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_SW, NodeId.LIGHT_C1_WEST, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_SW, NodeId.LIGHT_C1_NE, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_SW, NodeId.DARK_A1_SW, NodeConnectionId.HasMirrorInverted ),
+
+  makeEdge( NodeId.LIGHT_A1_SE, NodeId.LIGHT_A1_NE, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_SE, NodeId.LIGHT_FOREST_HIDEOUT_ENTRANCE, NodeConnectionId.CanActInLightWorld ),
+  makeEdge( NodeId.LIGHT_A1_SE, NodeId.LIGHT_FOREST_HIDEOUT_EXIT, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_SE, NodeId.LIGHT_C2, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A1_SE, NodeId.DARK_A1_SE, NodeConnectionId.HasMirrorInverted ),
 
   // Light A3 Lumberjack screen transitions.
-  makeEdge( NodeId.LIGHT_A3, NodeId.LIGHT_A1, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_A3, NodeId.LIGHT_A1_NE, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_A3, NodeId.LIGHT_B3, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_A3, NodeId.LIGHT_LUMBERJACK_HOUSE, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_A3, NodeId.LIGHT_LUMBERJACK_EXIT, NodeConnectionId.Always ),
@@ -124,15 +141,16 @@ const lightWorldEdges: Edge[] = [
 
   makeEdge( NodeId.LIGHT_B8_ZORA_MAIN, NodeId.LIGHT_B8_ZORA_LEDGE, NodeConnectionId.CanGetItemsAfterWaterfall ),
   makeEdge( NodeId.LIGHT_B8_ZORA_MAIN, NodeId.LIGHT_B8, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_B8_ZORA_MAIN, NodeId.LIGHT_ZORA_LEDGE_ITEM, NodeConnectionId.AlwaysVisible ),
 
   makeEdge( NodeId.LIGHT_B8_ZORA_LEDGE, NodeId.LIGHT_ZORA_LEDGE_ITEM, NodeConnectionId.Always ),
 
   // Light C1 connections
-  makeEdge( NodeId.LIGHT_C1_WEST, NodeId.LIGHT_A1, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_C1_WEST, NodeId.LIGHT_A1_SW, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_C1_WEST, NodeId.LIGHT_A4, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_C1_WEST, NodeId.DARK_C1_WEST, NodeConnectionId.HasMirrorInverted ),
 
-  makeEdge( NodeId.LIGHT_C1_NE, NodeId.LIGHT_A1, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_C1_NE, NodeId.LIGHT_A1_SW, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_C1_NE, NodeId.LIGHT_C1_EAST, NodeConnectionId.HasHammerLightWorld ),
   makeEdge( NodeId.LIGHT_C1_NE, NodeId.DARK_C1_NE, NodeConnectionId.HasMirrorInverted ),
 
@@ -145,7 +163,7 @@ const lightWorldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_C1_SE, NodeId.DARK_C1_SE, NodeConnectionId.HasMirrorInverted ),
 
   // Light C2 connections
-  makeEdge( NodeId.LIGHT_C2, NodeId.LIGHT_A1, NodeConnectionId.Always ),
+  makeEdge( NodeId.LIGHT_C2, NodeId.LIGHT_A1_SE, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_C2, NodeId.LIGHT_C3, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_C2, NodeId.LIGHT_A4, NodeConnectionId.Always ),
   makeEdge( NodeId.LIGHT_C2, NodeId.LIGHT_KAKARIKO_FORTUNE, NodeConnectionId.Always ),
