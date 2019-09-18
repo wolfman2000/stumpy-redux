@@ -1,6 +1,6 @@
 import { entranceEdges } from './entrances';
 import { lightCaveEdges } from './light-caves';
-import { lightWorldEdges } from './light-world';
+import lightWorldEdges from './light-world';
 import { menuEdges } from './save';
 import { whirlpoolEdges } from './whirlpools';
 
