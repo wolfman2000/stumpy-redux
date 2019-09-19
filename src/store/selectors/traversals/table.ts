@@ -15,24 +15,31 @@ import NodeConnectionId from '../../../api/traversal/nodes/node-connection-id';
 import { isInverted, isSwordless } from '../settings';
 
 import { Medallion } from '../../../api/dungeon/medallion';
-import { hasAllCrystals, hasAllPendants, isCastleTowerDefeated, hasAllPyramidCrystals } from '../dungeons/bosses';
+import { hasAllCrystals, hasAllPendants, hasAllPyramidCrystals, isCastleTowerDefeated } from '../dungeons/bosses';
 import { getMiseryMireMedallionEntry, getTurtleRockMedallionEntry } from '../dungeons/medallions';
-import { hasBomb } from '../inventory/bomb';
-import { hasBombos } from '../inventory/bombos';
-import { hasBook } from '../inventory/book';
-import { hasBoots } from '../inventory/boots';
-import { hasEther } from '../inventory/ether';
-import { hasFireRod } from '../inventory/fire-rod';
+import { canBreakCastleTowerBarrier, hasPrimaryMelee } from '../inventory';
+import { hasBomb, hasBombsForDarkWorld, hasBombsForLightWorld } from '../inventory/bomb';
+import { hasBombosForDarkWorld } from '../inventory/bombos';
+import { hasBook, hasBookForLightWorld } from '../inventory/book';
+import { hasBoots, hasBootsForDarkWorld, hasBootsForLightWorld } from '../inventory/boots';
+import { hasEtherForDarkWorld } from '../inventory/ether';
+import { hasFireRodForDarkWorld } from '../inventory/fire-rod';
 import { hasFlippers } from '../inventory/flippers';
-import { hasFlute } from '../inventory/flute';
-import { hasGlove, hasTitans } from '../inventory/gloves';
-import { hasHammer } from '../inventory/hammer';
-import { canBreakCastleTowerBarrier, hasPrimaryMelee } from '../inventory/helpers';
-import { hasHookshot } from '../inventory/hookshot';
+import { hasFluteForDarkWorld, hasFluteForLightWorld } from '../inventory/flute';
+import {
+  hasGlove,
+  hasGloveForDarkWorld,
+  hasGloveForLightWorld,
+  hasTitans,
+  hasTitansForDarkWorld,
+  hasTitansForLightWorld,
+} from '../inventory/gloves';
+import { hasHammer, hasHammerForDarkWorld, hasHammerForLightWorld } from '../inventory/hammer';
+import { hasHookshotForDarkWorld, hasHookshotForLightWorld } from '../inventory/hookshot';
 import { hasMirror } from '../inventory/mirror';
-import { hasMoonPearl } from '../inventory/moon-pearl';
-import { hasQuake } from '../inventory/quake';
-import { hasShovel } from '../inventory/shovel';
+import { hasMoonPearl, hasMoonPearlForDarkWorld, hasMoonPearlForLightWorld } from '../inventory/moon-pearl';
+import { hasQuakeForDarkWorld } from '../inventory/quake';
+import { hasShovelForLightWorld } from '../inventory/shovel';
 import { hasMasterSword } from '../inventory/swords';
 
 const always = ( _: StumpyState ): AvailabilityLogic => {
@@ -81,30 +88,27 @@ const hasMirrorInvertedItem = createSelector(
 );
 
 const canActInLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  ( inverted, moon ) => isGoodOrUnavailable( !inverted || moon ),
+  hasMoonPearlForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const canActInDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  ( inverted, moon ) => isGoodOrUnavailable( inverted || moon ),
+  hasMoonPearlForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const isTabletAccessible = createSelector(
   isSwordless,
-  isInverted,
+  canActInLightWorld,
   hasBook,
   hasMasterSword,
   hasHammer,
-  hasMoonPearl,
-  ( less, inverted, book, master, hammer, moon ): AvailabilityLogic => {
+  ( less, light, book, master, hammer ): AvailabilityLogic => {
     if ( !book ) {
       return unavailable;
     }
 
-    if ( inverted && !moon ) {
+    if ( !light ) {
       return unavailable;
     }
 
@@ -129,120 +133,88 @@ const hasGoodDarkWorldInternal = ( inverted: boolean, moon: boolean, item: boole
 };
 
 const hasBombsLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasBomb,
-  hasGoodLightWorldInternal,
+  hasBombsForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasBombsDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasBomb,
-  hasGoodDarkWorldInternal,
+  hasBombsForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasHookshotLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasHookshot,
-  hasGoodLightWorldInternal,
+  hasHookshotForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasHookshotDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasHookshot,
-  hasGoodDarkWorldInternal,
+  hasHookshotForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasFireRodDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasFireRod,
-  hasGoodDarkWorldInternal,
+  hasFireRodForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasShovelLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasShovel,
-  hasGoodLightWorldInternal,
+  hasShovelForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasHammerLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasHammer,
-  hasGoodLightWorldInternal,
+  hasHammerForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasHammerDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasHammer,
-  hasGoodDarkWorldInternal,
+  hasHammerForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasFluteNotInverted = createSelector(
-  isInverted,
-  hasFlute,
-  ( inverted, flute ) => isGoodOrUnavailable( !inverted && flute ),
+  hasFluteForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasFluteInverted = createSelector(
-  isInverted,
-  hasFlute,
-  ( inverted, flute ) => isGoodOrUnavailable( inverted && flute ),
+  hasFluteForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasBookLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasHammer,
-  hasGoodLightWorldInternal,
+  hasBookForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasGloveLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasGlove,
-  hasGoodLightWorldInternal,
+  hasGloveForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasGloveDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasGlove,
-  hasGoodDarkWorldInternal,
+  hasGloveForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasTitansLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasTitans,
-  hasGoodLightWorldInternal,
+  hasTitansForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasTitansDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasTitans,
-  hasGoodDarkWorldInternal,
+  hasTitansForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasBootsLightWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasBoots,
-  hasGoodLightWorldInternal,
+  hasBootsForLightWorld,
+  isGoodOrUnavailable,
 );
 
 const hasBootsDarkWorld = createSelector(
-  isInverted,
-  hasMoonPearl,
-  hasBoots,
-  hasGoodDarkWorldInternal,
+  hasBootsForDarkWorld,
+  isGoodOrUnavailable,
 );
 
 const hasFlippersItem = createSelector(
@@ -271,15 +243,14 @@ const canPullPedestal = createSelector(
 );
 
 const canEnterPyramidWall = createSelector(
-  isInverted,
-  hasMoonPearl,
+  hasMoonPearlForDarkWorld,
   hasAllPyramidCrystals,
-  ( inverted, moon, crystals ) => {
+  ( moon, crystals ) => {
     if ( !crystals ) {
       return unavailable;
     }
 
-    return isGoodOrUnavailable( inverted || moon );
+    return isGoodOrUnavailable( moon );
   },
 );
 
@@ -318,15 +289,14 @@ const hasNotBeatenAgahnimForDarkWorld = createSelector(
 );
 
 const canEnterLumberjackTree = createSelector(
-  isInverted,
-  hasMoonPearl,
+  hasMoonPearlForLightWorld,
   hasBoots,
   isCastleTowerDefeated,
-  ( inverted, moon, boots, aga1 ): AvailabilityLogic => {
+  ( light, boots, aga1 ): AvailabilityLogic => {
     if ( !boots ) {
       return unavailable;
     }
-    if ( inverted && !moon ) {
+    if ( !light ) {
       return unavailable;
     }
     return aga1 ? available : unavailable;
@@ -462,18 +432,18 @@ const canEnterMedallionDungeon = (
 };
 
 const canEnterMiseryMire = createSelector(
-  hasBombos,
-  hasEther,
-  hasQuake,
+  hasBombosForDarkWorld,
+  hasEtherForDarkWorld,
+  hasQuakeForDarkWorld,
   hasPrimaryMelee,
   getMiseryMireMedallionEntry,
   canEnterMedallionDungeon,
 );
 
 const canEnterTurtleRock = createSelector(
-  hasBombos,
-  hasEther,
-  hasQuake,
+  hasBombosForDarkWorld,
+  hasEtherForDarkWorld,
+  hasQuakeForDarkWorld,
   hasPrimaryMelee,
   getTurtleRockMedallionEntry,
   canEnterMedallionDungeon,

@@ -3,6 +3,9 @@ import { StumpyState } from '../../reducers';
 
 import { wrap } from '../../../api/helpers';
 import InventoryId from '../../../api/inventory/inventory-id';
+import { isInverted } from '../settings';
+import { hasItemForDarkWorld, hasItemForLightWorld } from './helpers';
+import { hasMoonPearl } from './moon-pearl';
 
 const getFireRod = ( state: StumpyState ) => state.inventory[InventoryId.FireRod];
 
@@ -19,4 +22,18 @@ export const prevFireRod = createSelector(
 export const hasFireRod = createSelector(
   getFireRod,
   ( fire ) => fire > 0,
+);
+
+export const hasFireRodForLightWorld = createSelector(
+  isInverted,
+  hasMoonPearl,
+  hasFireRod,
+  hasItemForLightWorld,
+);
+
+export const hasFireRodForDarkWorld = createSelector(
+  isInverted,
+  hasMoonPearl,
+  hasFireRod,
+  hasItemForDarkWorld,
 );

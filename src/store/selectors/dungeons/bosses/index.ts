@@ -18,7 +18,7 @@ import {
   hasPrimaryMelee,
   hasThreeMagicBars,
   hasTwoMagicBars,
-} from '../../inventory/helpers';
+} from '../../inventory';
 
 import { hasBomb } from '../../inventory/bomb';
 import { hasBombos } from '../../inventory/bombos';
