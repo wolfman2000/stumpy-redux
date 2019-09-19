@@ -5,8 +5,8 @@ import InventoryId from '../../../api/inventory/inventory-id';
 
 import { StumpyState } from '../../reducers';
 
+import { canBreakCastleTowerBarrier } from '.';
 import { hasCape, nextCape, prevCape } from './cape';
-import { canBreakCastleTowerBarrier } from './helpers';
 
 import { fallbackInventory } from '../../../api/inventory';
 import { fallbackSettings } from '../../../api/settings';

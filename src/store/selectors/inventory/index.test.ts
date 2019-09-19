@@ -6,7 +6,8 @@ import { StumpyState } from '../../reducers';
 import InventoryId from '../../../api/inventory/inventory-id';
 import { fallbackSettings } from '../../../api/settings';
 import ItemFunctionality from '../../../api/settings/difficulty/item-functionality';
-import { getAvailableMagicBars } from './helpers';
+
+import { getAvailableMagicBars } from '.';
 
 describe( 'The magic capacity', () => {
   let state: Partial<StumpyState>;

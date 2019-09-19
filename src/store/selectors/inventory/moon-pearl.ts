@@ -3,6 +3,7 @@ import { StumpyState } from '../../reducers';
 
 import { wrap } from '../../../api/helpers';
 import InventoryId from '../../../api/inventory/inventory-id';
+import { isInverted } from '../settings';
 
 const getMoonPearl = ( state: StumpyState ) => state.inventory[InventoryId.MoonPearl];
 
@@ -19,4 +20,16 @@ export const prevMoonPearl = createSelector(
 export const hasMoonPearl = createSelector(
   getMoonPearl,
   ( cur ) => cur > 0,
+);
+
+export const hasMoonPearlForLightWorld = createSelector(
+  isInverted,
+  hasMoonPearl,
+  ( inverted, moon ) => !inverted || moon,
+);
+
+export const hasMoonPearlForDarkWorld = createSelector(
+  isInverted,
+  hasMoonPearl,
+  ( inverted, moon ) => inverted || moon,
 );

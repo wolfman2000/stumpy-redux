@@ -11,7 +11,8 @@ import { fallbackInventory } from '../../../api/inventory';
 import { fallbackSettings } from '../../../api/settings';
 import ItemPool from '../../../api/settings/difficulty/item-pool';
 import Swords from '../../../api/settings/difficulty/swords';
-import { canBreakCastleTowerBarrier, hasProjectile, hasReliableWeapon } from './helpers';
+
+import { canBreakCastleTowerBarrier, hasProjectile, hasReliableWeapon } from '.';
 
 describe( 'The sword based selectors', () => {
   let state: Partial<StumpyState>;
