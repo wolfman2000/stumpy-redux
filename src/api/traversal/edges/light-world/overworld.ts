@@ -39,7 +39,7 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_DM_ASCENT_EXIT_CAVE ),
   makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_OLD_MAN_MOUNTAIN_CAVE_ENTRANCE ),
   makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_OLD_MAN_MOUNTAIN_CAVE_EXIT ),
-  makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_DM_DESCENT_ENTRANCE_CAVE ),
+  makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_DM_DESCENT_ENTRANCE ),
   makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_SPECTACLE_ROCK_LOOKOUT_CAVE ),
   makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_SPECTACLE_ROCK_EXIT ),
   makeEdge( NodeId.LIGHT_A4_LOWER, NodeId.LIGHT_SPECTACLE_ROCK_ENTRANCE ),
@@ -84,7 +84,7 @@ const lightOverworldEdges: Edge[] = [
 
   makeEdge( NodeId.LIGHT_A6_LOWER, NodeId.LIGHT_A6_LOWER_LEFT, NodeConnectionId.HasHookshotLightWorld ),
   makeEdge( NodeId.LIGHT_A6_LOWER, NodeId.LIGHT_SPIRAL_CAVE_EXIT ),
-  makeEdge( NodeId.LIGHT_A6_LOWER, NodeId.LIGHT_MOUNTAIN_SHOP ),
+  makeEdge( NodeId.LIGHT_A6_LOWER, NodeId.LIGHT_MOUNTAIN_FAIRY_CAVE ),
   makeEdge( NodeId.LIGHT_A6_LOWER, NodeId.LIGHT_PARADOX_MIDDLE_ENTRANCE ),
   makeEdge( NodeId.LIGHT_A6_LOWER, NodeId.LIGHT_PARADOX_BOTTOM_ENTRANCE ),
 
@@ -103,7 +103,7 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_B3, NodeId.LIGHT_B3_DM_BOTTOM, NodeConnectionId.HasGloveLightWorld ),
 
   makeEdge( NodeId.LIGHT_B3_DM_BOTTOM, NodeId.LIGHT_B3 ),
-  makeEdge( NodeId.LIGHT_B3_DM_BOTTOM, NodeId.LIGHT_DM_DESCENT_EXIT ),
+  makeEdge( NodeId.LIGHT_B3_DM_BOTTOM, NodeId.LIGHT_DM_DESCENT_EXIT_CAVE ),
 
   makeEdge( NodeId.LIGHT_B3_DM_TOP, NodeId.LIGHT_B3 ),
   makeEdge( NodeId.LIGHT_B3_DM_TOP, NodeId.LIGHT_DM_ASCENT_ENTRANCE ),
@@ -285,7 +285,7 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_F2_LOWER, NodeId.LIGHT_F2_UPPER ),
   makeEdge( NodeId.LIGHT_F2_LOWER, NodeId.LIGHT_F1_LOWER ),
   makeEdge( NodeId.LIGHT_F2_LOWER, NodeId.LIGHT_F3_BYPASS ),
-  makeEdge( NodeId.LIGHT_F2_LOWER, NodeId.LIGHT_OUTSIDE_CHEST_GAME_ENTRANCE ),
+  makeEdge( NodeId.LIGHT_F2_LOWER, NodeId.LIGHT_KAKARIKO_CHEST_GAME_ENTRANCE ),
   makeEdge( NodeId.LIGHT_F2_LOWER, NodeId.LIGHT_BROTHERS_RIGHT_ENTRANCE ),
 
   // Light F3 connections

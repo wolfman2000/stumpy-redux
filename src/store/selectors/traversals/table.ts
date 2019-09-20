@@ -17,13 +17,14 @@ import { isInverted, isSwordless } from '../settings';
 import { Medallion } from '../../../api/dungeon/medallion';
 import { hasAllCrystals, hasAllPendants, hasAllPyramidCrystals, isCastleTowerDefeated } from '../dungeons/bosses';
 import { getMiseryMireMedallionEntry, getTurtleRockMedallionEntry } from '../dungeons/medallions';
-import { canBreakCastleTowerBarrier, hasPrimaryMelee } from '../inventory';
+import { canBreakCastleTowerBarrier, hasEitherCane, hasFireSource, hasPrimaryMelee, hasProjectile } from '../inventory';
 import { hasBomb, hasBombsForDarkWorld, hasBombsForLightWorld } from '../inventory/bomb';
 import { hasBombosForDarkWorld } from '../inventory/bombos';
 import { hasBook, hasBookForLightWorld } from '../inventory/book';
 import { hasBoots, hasBootsForDarkWorld, hasBootsForLightWorld } from '../inventory/boots';
+import { hasBottles } from '../inventory/bottles';
 import { hasEtherForDarkWorld } from '../inventory/ether';
-import { hasFireRodForDarkWorld } from '../inventory/fire-rod';
+import { hasFireRod, hasFireRodForDarkWorld } from '../inventory/fire-rod';
 import { hasFlippers } from '../inventory/flippers';
 import { hasFluteForDarkWorld, hasFluteForLightWorld } from '../inventory/flute';
 import {
@@ -35,12 +36,16 @@ import {
   hasTitansForLightWorld,
 } from '../inventory/gloves';
 import { hasHammer, hasHammerForDarkWorld, hasHammerForLightWorld } from '../inventory/hammer';
-import { hasHookshotForDarkWorld, hasHookshotForLightWorld } from '../inventory/hookshot';
+import { hasHookshot, hasHookshotForDarkWorld, hasHookshotForLightWorld } from '../inventory/hookshot';
+import { hasLantern } from '../inventory/lantern';
 import { hasMirror } from '../inventory/mirror';
 import { hasMoonPearl, hasMoonPearlForDarkWorld, hasMoonPearlForLightWorld } from '../inventory/moon-pearl';
+import { hasMushroom } from '../inventory/mushroom';
+import { hasPowder } from '../inventory/powder';
 import { hasQuakeForDarkWorld } from '../inventory/quake';
 import { hasShovelForLightWorld } from '../inventory/shovel';
-import { hasMasterSword } from '../inventory/swords';
+import { hasSomaria } from '../inventory/somaria';
+import { hasMasterSword, hasSword } from '../inventory/swords';
 
 const always = ( _: StumpyState ): AvailabilityLogic => {
   return available;
@@ -75,6 +80,11 @@ const isNotInvertedMode = createSelector(
   ( inverted ) => isGoodOrUnavailable( !inverted ),
 );
 
+const hasBottleItem = createSelector(
+  hasBottles,
+  isGoodOrUnavailable,
+);
+
 const hasMirrorItem = createSelector(
   hasMirror,
   isInverted,
@@ -95,6 +105,16 @@ const canActInLightWorld = createSelector(
 const canActInDarkWorld = createSelector(
   hasMoonPearlForDarkWorld,
   isGoodOrUnavailable,
+);
+
+const hasLightSource = createSelector(
+  hasLantern,
+  isGoodOrGlitched,
+);
+
+const hasTorchLightSource = createSelector(
+  hasFireSource,
+  isGoodOrGlitched,
 );
 
 const isTabletAccessible = createSelector(
@@ -225,6 +245,70 @@ const hasFlippersItem = createSelector(
 const hasFakableFlippers = createSelector(
   hasFlippers,
   isGoodOrGlitched,
+);
+
+const canBombJumpOrHover = createSelector(
+  hasBomb,
+  hasBoots,
+  ( bomb, boot ) => ( bomb || boot ) ? availableWithGlitches : unavailable,
+);
+
+const hasBootsOrBombs = createSelector(
+  hasBomb,
+  hasBoots,
+  ( bomb, boot ) => isGoodOrUnavailable( bomb || boot ),
+);
+
+const canDefeatMiniMoldorms = createSelector(
+  hasSword,
+  hasHammer,
+  hasFireRod,
+  hasEitherCane,
+  hasBomb,
+  hasHookshot,
+  ( sword, hammer, rod, cane, bomb, hook ) => {
+    return isGoodOrUnavailable( sword || hammer || rod || cane || bomb || hook );
+  },
+);
+
+const canKnockItemOffTorch = createSelector(
+  hasBoots,
+  ( boots ) => boots ? available : visible,
+);
+
+const hasPowderOrFake = createSelector(
+  hasPowder,
+  hasSomaria,
+  hasMushroom,
+  ( powder, somaria, mushroom ) => {
+    if ( powder ) {
+      return available;
+    }
+    if ( somaria && mushroom ) {
+      return availableWithGlitches;
+    }
+    return unavailable;
+  },
+);
+
+const canHoverInLightWorld = createSelector(
+  hasBootsForLightWorld,
+  ( boots ) => boots ? availableWithGlitches : unavailable,
+);
+
+const canHoverInDarkWorld = createSelector(
+  hasBootsForDarkWorld,
+  ( boots ) => boots ? availableWithGlitches : unavailable,
+);
+
+const canMakeBlocksDisappear = createSelector(
+  hasMirror,
+  ( mirror ) => mirror ? availableWithGlitches : unavailable,
+);
+
+const hasReliableProjectile = createSelector(
+  hasProjectile,
+  isGoodOrUnavailable,
 );
 
 const canPullPedestal = createSelector(
@@ -467,6 +551,7 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.HasFluteNotInverted, hasFluteNotInverted ],
   [ NodeConnectionId.HasFluteInverted, hasFluteInverted ],
   [ NodeConnectionId.HasBookLightWorld, hasBookLightWorld ],
+  [ NodeConnectionId.HasBottle, hasBottleItem ],
   [ NodeConnectionId.HasMirror, hasMirrorItem ],
   [ NodeConnectionId.HasMirrorInverted, hasMirrorInvertedItem ],
   [ NodeConnectionId.HasGloveLightWorld, hasGloveLightWorld ],
@@ -481,6 +566,18 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.CanActInLightWorld, canActInLightWorld ],
   [ NodeConnectionId.CanActInDarkWorld, canActInDarkWorld ],
 
+  [ NodeConnectionId.CanDefeatMiniMoldorms, canDefeatMiniMoldorms ],
+  [ NodeConnectionId.CanKnockItemOffTorch, canKnockItemOffTorch ],
+  [ NodeConnectionId.HasLightSource, hasLightSource ],
+  [ NodeConnectionId.HasTorchLightSource, hasTorchLightSource ],
+  [ NodeConnectionId.CanMakeBlocksDisappear, canMakeBlocksDisappear ],
+  [ NodeConnectionId.HasReliableProjectile, hasReliableProjectile ],
+
+  [ NodeConnectionId.CanBombJumpOrHover, canBombJumpOrHover ],
+  [ NodeConnectionId.HasBootsOrBombs, hasBootsOrBombs ],
+  [ NodeConnectionId.HasPowderOrFake, hasPowderOrFake ],
+  [ NodeConnectionId.CanHoverInLightWorld, canHoverInLightWorld ],
+  [ NodeConnectionId.CanHoverInDarkWorld, canHoverInDarkWorld ],
   [ NodeConnectionId.CanPullPedestal, canPullPedestal ],
   [ NodeConnectionId.CanEnterPyramidWall, canEnterPyramidWall ],
   [ NodeConnectionId.HasNotBeatenAgahnimForDarkWorld, hasNotBeatenAgahnimForDarkWorld ],

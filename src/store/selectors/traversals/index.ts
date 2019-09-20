@@ -66,7 +66,9 @@ const generateLimitedGraph = (
 };
 
 const generateAccessibleGraph = ( state: StumpyState, edges: Edge[] ) => {
-  return generateLimitedGraph( state, edges, [available] );
+  const graph = generateLimitedGraph( state, edges, [available] );
+  // console.log( graph );
+  return graph;
 };
 
 const generateVisibleGraph = ( state: StumpyState, edges: Edge[] ) => {
