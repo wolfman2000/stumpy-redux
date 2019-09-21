@@ -15,7 +15,7 @@ describe( 'The Palace of Darkness', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

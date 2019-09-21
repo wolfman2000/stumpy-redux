@@ -20,7 +20,7 @@ describe( 'The boomerang based selectors', () => {
 
   beforeEach( () => {
     state = {
-      inventory: fallbackInventory,
+      inventory: {...fallbackInventory},
     };
   } );
 

@@ -15,7 +15,7 @@ describe( 'Turtle Rock', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

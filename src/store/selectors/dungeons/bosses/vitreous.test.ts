@@ -17,15 +17,15 @@ describe( 'The boss Vitreous', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
+      dungeons: {...fallbackDungeonMaps},
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 
   describe( '(in restricted settings)', () => {
     beforeEach( () => {
-      state.settings!.itemPlacement = ItemPlacement.Restricted;
+      state.settings!.itemPlacement = ItemPlacement.Basic;
     } );
 
     it( 'cannot be beaten if there is no equipment on hand.', () => {

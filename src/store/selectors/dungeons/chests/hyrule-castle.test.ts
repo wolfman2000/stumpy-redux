@@ -15,7 +15,7 @@ describe( 'Hyrule Castle', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

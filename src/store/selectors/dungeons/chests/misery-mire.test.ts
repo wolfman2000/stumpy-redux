@@ -15,7 +15,7 @@ describe( 'Misery Mire', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

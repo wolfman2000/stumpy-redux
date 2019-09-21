@@ -47,7 +47,7 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_A4_SPECTACLE_ROCK, NodeId.LIGHT_A4_UPPER ),
   makeEdge( NodeId.LIGHT_A4_SPECTACLE_ROCK, NodeId.LIGHT_A4_LOWER ),
 
-  makeEdge( NodeId.LIGHT_A4_UPPER, NodeId.LIGHT_ETHER_MEDALLION, NodeConnectionId.IsTabletAccessible ),
+  makeEdge( NodeId.LIGHT_A4_UPPER, NodeId.LIGHT_ETHER_TABLET, NodeConnectionId.IsTabletAccessible ),
   makeEdge( NodeId.LIGHT_A4_UPPER, NodeId.LIGHT_A4_SPECTACLE_ROCK, NodeConnectionId.IsInverted ),
   makeEdge( NodeId.LIGHT_A4_UPPER, NodeId.LIGHT_A4_LOWER ),
   makeEdge( NodeId.LIGHT_A4_UPPER, NodeId.LIGHT_A6_UPPER_LEFT ),
@@ -261,6 +261,9 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_E3, NodeId.LIGHT_E3_UPPER, NodeConnectionId.HasHammerLightWorld ),
   makeEdge( NodeId.LIGHT_E3, NodeId.LIGHT_BLACKSMITHS_ENTRANCE ),
 
+  makeEdge( NodeId.LIGHT_E3_UPPER, NodeId.LIGHT_E3, NodeConnectionId.HasHammerLightWorld ),
+  makeEdge( NodeId.LIGHT_E3_UPPER, NodeId.LIGHT_MAD_BATTER_ENTRANCE ),
+
   // Light E6 connections
   makeEdge( NodeId.LIGHT_E6, NodeId.LIGHT_D6_EAST ),
   makeEdge( NodeId.LIGHT_E6, NodeId.LIGHT_D4_OUTER, NodeConnectionId.HasGloveLightWorld ),
@@ -438,7 +441,7 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_G8, NodeId.LIGHT_H8 ),
   makeEdge( NodeId.LIGHT_G8, NodeId.LIGHT_ICE_ROD_CAVE_ENTRANCE, NodeConnectionId.HasBombsLightWorld ),
   makeEdge( NodeId.LIGHT_G8, NodeId.LIGHT_ICE_BEE_CAVE_ENTRANCE ),
-  makeEdge( NodeId.LIGHT_G8, NodeId.LIGHT_FAIRY_CAVE_ENTRANCE, NodeConnectionId.HasGloveLightWorld ),
+  makeEdge( NodeId.LIGHT_G8, NodeId.LIGHT_ICE_FAIRY_CAVE_ENTRANCE, NodeConnectionId.HasGloveLightWorld ),
 
   // Light H3 connections
   makeEdge( NodeId.LIGHT_H3, NodeId.LIGHT_G1 ),

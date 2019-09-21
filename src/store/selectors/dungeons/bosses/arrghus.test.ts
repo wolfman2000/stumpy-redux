@@ -17,9 +17,9 @@ describe( 'The boss Arrghus', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
-      inventory: fallbackInventory,
-      settings: fallbackSettings,
+      dungeons: {...fallbackDungeonMaps},
+      inventory: {...fallbackInventory},
+      settings: {...fallbackSettings},
     };
   } );
 
@@ -39,7 +39,7 @@ describe( 'The boss Arrghus', () => {
 
     it( 'can be beaten (expectedly) with the hookshot & Master Sword.', () => {
       state.inventory![InventoryId.Sword] = 3;
-      state.settings!.itemPlacement = ItemPlacement.Restricted;
+      state.settings!.itemPlacement = ItemPlacement.Basic;
 
       Selector( makeCanDefeatBoss() ).expect( state, DungeonId.SwampPalace ).toReturn( true );
     } );

@@ -68,8 +68,8 @@ describe( 'The cape itself', () => {
 
   beforeEach( () => {
     state = {
-      inventory: fallbackInventory,
-      settings: fallbackSettings,
+      inventory: {...fallbackInventory},
+      settings: {...fallbackSettings},
     };
   } );
 

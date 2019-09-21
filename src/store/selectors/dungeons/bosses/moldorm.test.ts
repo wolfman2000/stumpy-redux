@@ -15,9 +15,9 @@ describe( 'The boss Moldorm', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
+      dungeons: {...fallbackDungeonMaps},
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

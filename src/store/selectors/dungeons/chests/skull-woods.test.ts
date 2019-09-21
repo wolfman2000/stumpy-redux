@@ -15,7 +15,7 @@ describe( 'Skull Woods', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

@@ -29,20 +29,23 @@ const lightCaveEdges: Edge[] = [
   makeEdge( NodeId.CAVE_SPECTACLE_OUTLOOK, NodeId.LIGHT_SPECTACLE_ROCK_LOOKOUT_CAVE ),
   makeEdge( NodeId.CAVE_SPECTACLE_FAIRY, NodeId.CAVE_SPECTACLE_EXIT ),
   makeEdge( NodeId.CAVE_SPECTACLE_EXIT, NodeId.CAVE_SPECTACLE_FAIRY ),
-  makeEdge( NodeId.CAVE_SPECTACLE_EXIT, NodeId.LIGHT_SPIRAL_CAVE_EXIT ),
+  makeEdge( NodeId.CAVE_SPECTACLE_EXIT, NodeId.LIGHT_SPECTACLE_ROCK_EXIT ),
 
   makeEdge( NodeId.CAVE_DM_DESCENT_ENTRANCE, NodeId.LIGHT_DM_DESCENT_ENTRANCE ),
   makeEdge( NodeId.CAVE_DM_DESCENT_ENTRANCE, NodeId.CAVE_DM_DESCENT_DARK, NodeConnectionId.HasLightSource ),
   makeEdge( NodeId.CAVE_DM_DESCENT_DARK, NodeId.CAVE_DM_DESCENT_ENTRANCE, NodeConnectionId.HasLightSource ),
   makeEdge( NodeId.CAVE_DM_DESCENT_DARK, NodeId.CAVE_DM_DESCENT_EXIT, NodeConnectionId.HasLightSource ),
   makeEdge( NodeId.CAVE_DM_DESCENT_EXIT, NodeId.CAVE_DM_DESCENT_DARK, NodeConnectionId.HasLightSource ),
-  makeEdge( NodeId.CAVE_DM_DESCENT_EXIT, NodeId.LIGHT_DM_DESCENT_EXIT_CAVE ),
+  makeEdge( NodeId.CAVE_DM_DESCENT_EXIT, NodeId.LIGHT_DM_DESCENT_EXIT_CAVE, NodeConnectionId.IsNotInverted ),
+  makeEdge( NodeId.CAVE_DM_DESCENT_EXIT, NodeId.LIGHT_DM_ASCENT_EXIT_CAVE, NodeConnectionId.IsInverted ),
 
-  makeEdge( NodeId.CAVE_DM_ASCENT_ENTRANCE, NodeId.LIGHT_DM_ASCENT_ENTRANCE ),
+  makeEdge( NodeId.CAVE_DM_ASCENT_ENTRANCE, NodeId.LIGHT_DM_ASCENT_ENTRANCE, NodeConnectionId.IsNotInverted ),
+  makeEdge( NodeId.CAVE_DM_ASCENT_ENTRANCE, NodeId.DARK_BUMPER_BOTTOM_ENTRANCE, NodeConnectionId.IsInverted ),
   makeEdge( NodeId.CAVE_DM_ASCENT_ENTRANCE, NodeId.CAVE_DM_ASCENT_DARK, NodeConnectionId.HasLightSource ),
   makeEdge( NodeId.CAVE_DM_ASCENT_DARK, NodeId.CAVE_DM_ASCENT_EXIT, NodeConnectionId.HasLightSource ),
   makeEdge( NodeId.CAVE_DM_ASCENT_EXIT, NodeId.CAVE_DM_ASCENT_DARK, NodeConnectionId.HasLightSource ),
-  makeEdge( NodeId.CAVE_DM_ASCENT_EXIT, NodeId.LIGHT_DM_ASCENT_EXIT_CAVE ),
+  makeEdge( NodeId.CAVE_DM_ASCENT_EXIT, NodeId.LIGHT_DM_ASCENT_EXIT_CAVE, NodeConnectionId.IsNotInverted ),
+  makeEdge( NodeId.CAVE_DM_ASCENT_EXIT, NodeId.DARK_MOUNTAIN_FAIRY_ENTRANCE, NodeConnectionId.IsInverted ),
 
   makeEdge( NodeId.CAVE_DM_MAN_FRONT, NodeId.LIGHT_OLD_MAN_MOUNTAIN_CAVE_ENTRANCE ),
   makeEdge( NodeId.CAVE_DM_MAN_FRONT, NodeId.CAVE_DM_MAN_DARK, NodeConnectionId.HasLightSource ),
@@ -100,6 +103,7 @@ const lightCaveEdges: Edge[] = [
 
   // Light C7 connections
   makeEdge( NodeId.CAVE_POTION_SHOP, NodeId.LIGHT_POTION_SHOP_ENTRANCE ),
+  makeEdge( NodeId.CAVE_POTION_SHOP, NodeId.CAVE_POTION_SHOP_ITEM, NodeConnectionId.HasMushroom ),
 
   // Light D1 connections
   makeEdge( NodeId.CAVE_WELL_TOP, NodeId.CAVE_WELL_HIDDEN, NodeConnectionId.HasBombsLightWorld ),
