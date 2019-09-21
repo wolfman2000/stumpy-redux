@@ -5,10 +5,9 @@ import { StumpyState } from '../../reducers';
 
 import { getFullAccessibleGraph, isNodeOnGraph, makeGetAccessibility } from '.';
 
-import { fallbackSettings } from '../../../api/settings';
-
 import { fallbackDungeonMaps } from '../../../api/dungeon';
 import { fallbackInventory } from '../../../api/inventory';
+import { fallbackSettings } from '../../../api/settings';
 import { fallbackNodes } from '../../../api/traversal';
 import { fallbackEdges } from '../../../api/traversal/edges';
 

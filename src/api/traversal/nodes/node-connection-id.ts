@@ -20,6 +20,7 @@ enum NodeConnectionId {
   HasFluteNotInverted,
   HasFluteInverted,
   HasBookLightWorld,
+  HasBottle,
   HasMirror,
   HasMirrorInverted,
   HasGloveLightWorld,
@@ -36,6 +37,18 @@ enum NodeConnectionId {
   CanActInDarkWorld,
 
   // More descriptive.
+  CanDefeatMiniMoldorms,
+  CanBombJumpOrHover,
+  HasBootsOrBombs,
+  CanKnockItemOffTorch,
+  HasPowderOrFake,
+  CanHoverInLightWorld,
+  CanHoverInDarkWorld,
+  HasLightSource,
+  HasTorchLightSource,
+  CanMakeBlocksDisappear,
+  HasReliableProjectile,
+
   CanPullPedestal,
   CanEnterPyramidWall,
   CanEnterDarkWorldViaAgahnim,

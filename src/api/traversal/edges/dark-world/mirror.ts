@@ -12,7 +12,7 @@ const makeMirrorEdge = (
   return makeEdge( from, to, how );
 };
 
-const lightMirrorEdges: Edge[] = [
+const darkMirrorEdges: Edge[] = [
   makeMirrorEdge( NodeId.DARK_A1_NW, NodeId.LIGHT_A1_NW ),
   makeMirrorEdge( NodeId.DARK_A1_NE, NodeId.LIGHT_A1_NE ),
   makeMirrorEdge( NodeId.DARK_A1_SW, NodeId.LIGHT_A1_SW ),
@@ -114,4 +114,4 @@ const lightMirrorEdges: Edge[] = [
   makeMirrorEdge( NodeId.DARK_H8, NodeId.LIGHT_H8 ),
 ];
 
-export { lightMirrorEdges };
+export { darkMirrorEdges };
