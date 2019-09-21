@@ -1,6 +1,6 @@
 {
   "name": "stumpy-redux",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "A flexible tracker for Link to the Past Randomizer using redux.",
   "private": true,
   "repository": {
