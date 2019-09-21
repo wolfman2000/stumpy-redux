@@ -15,7 +15,7 @@ describe( 'The Tower of Hera', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

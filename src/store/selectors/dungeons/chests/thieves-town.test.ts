@@ -15,7 +15,7 @@ describe( 'Thieves Town', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

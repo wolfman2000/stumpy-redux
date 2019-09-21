@@ -113,7 +113,7 @@ export const isExpertItemFunctionality = createSelector(
 
 export const isRestrictedItemPlacement = createSelector(
   getItemPlacement,
-  ( restricted ) => restricted === ItemPlacement.Restricted,
+  ( restricted ) => restricted === ItemPlacement.Basic,
 );
 
 export const areMapsCompassesShuffled = createSelector(

@@ -15,6 +15,7 @@ import { getBottles } from './bottles';
 import { hasBow } from './bow-and-silvers';
 import { hasByrna } from './byrna';
 import { hasCape } from './cape';
+import { hasEther } from './ether';
 import { hasFireRod } from './fire-rod';
 import { hasHammer } from './hammer';
 import { hasIceRod } from './ice-rod';
@@ -148,4 +149,23 @@ export const hasFireballInvulnerabilty = createSelector(
     }
     return cape;
   },
+);
+
+export const hasSpikeProtection = createSelector(
+  isNormalItemFunctionality,
+  hasCape,
+  hasByrna,
+  ( normal, cape, byrna ) => cape || ( normal && byrna ),
+);
+
+export const hasSpikeCaveProtection = createSelector(
+  hasSpikeProtection,
+  hasTwoMagicBars,
+  ( spikes, magic ) => spikes && magic,
+);
+
+export const canCastEtherWhenever = createSelector(
+  hasEther,
+  hasSword,
+  ( ether, sword ) => ether && sword,
 );

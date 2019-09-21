@@ -16,9 +16,9 @@ describe( 'The boss Helmasaur King', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
+      dungeons: {...fallbackDungeonMaps},
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 
@@ -61,7 +61,7 @@ describe( 'The boss Helmasaur King', () => {
   it( 'can be beaten (expectedly) with a hammer and Master Sword.', () => {
     state.inventory![InventoryId.Hammer] = 1;
     state.inventory![InventoryId.Sword] = 2;
-    state.settings!.itemPlacement = ItemPlacement.Restricted;
+    state.settings!.itemPlacement = ItemPlacement.Basic;
 
     Selector( makeCanDefeatBoss() ).expect( state, DungeonId.PalaceOfDarkness ).toReturn( true );
   } );

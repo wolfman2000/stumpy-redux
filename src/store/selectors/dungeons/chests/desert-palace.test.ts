@@ -15,7 +15,7 @@ describe( 'Desert Palace', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

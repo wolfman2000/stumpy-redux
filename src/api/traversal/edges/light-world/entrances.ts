@@ -30,13 +30,16 @@ const entranceEdges: Edge[] = [
 
   makeEdge( NodeId.LIGHT_DM_DESCENT_ENTRANCE, NodeId.LIGHT_A4_LOWER ),
   makeEdge( NodeId.LIGHT_DM_DESCENT_ENTRANCE, NodeId.CAVE_DM_DESCENT_ENTRANCE ),
-  makeEdge( NodeId.LIGHT_DM_DESCENT_EXIT_CAVE, NodeId.LIGHT_B3_DM_TOP ),
+  makeEdge( NodeId.LIGHT_DM_DESCENT_EXIT_CAVE, NodeId.LIGHT_B3_DM_TOP, NodeConnectionId.IsNotInverted ),
+  makeEdge( NodeId.LIGHT_DM_DESCENT_EXIT_CAVE, NodeId.LIGHT_A4_LOWER, NodeConnectionId.IsInverted ),
   makeEdge( NodeId.LIGHT_DM_DESCENT_EXIT_CAVE, NodeId.CAVE_DM_DESCENT_EXIT ),
 
   makeEdge( NodeId.LIGHT_DM_ASCENT_ENTRANCE, NodeId.LIGHT_B3_DM_BOTTOM ),
-  makeEdge( NodeId.LIGHT_DM_ASCENT_ENTRANCE, NodeId.CAVE_DM_ASCENT_ENTRANCE ),
+  makeEdge( NodeId.LIGHT_DM_ASCENT_ENTRANCE, NodeId.CAVE_DM_ASCENT_ENTRANCE, NodeConnectionId.IsNotInverted ),
+  makeEdge( NodeId.LIGHT_DM_ASCENT_ENTRANCE, NodeId.CAVE_BUMPER_CAVE_BOTTOM, NodeConnectionId.IsInverted ),
   makeEdge( NodeId.LIGHT_DM_ASCENT_EXIT_CAVE, NodeId.LIGHT_A4_LOWER ),
-  makeEdge( NodeId.LIGHT_DM_ASCENT_EXIT_CAVE, NodeId.CAVE_DM_ASCENT_EXIT ),
+  makeEdge( NodeId.LIGHT_DM_ASCENT_EXIT_CAVE, NodeId.CAVE_DM_ASCENT_EXIT, NodeConnectionId.IsNotInverted ),
+  makeEdge( NodeId.LIGHT_DM_ASCENT_EXIT_CAVE, NodeId.CAVE_DM_DESCENT_EXIT, NodeConnectionId.IsInverted ),
 
   makeEdge( NodeId.LIGHT_OLD_MAN_MOUNTAIN_CAVE_ENTRANCE, NodeId.CAVE_DM_MAN_FRONT ),
   makeEdge( NodeId.LIGHT_OLD_MAN_MOUNTAIN_CAVE_ENTRANCE, NodeId.LIGHT_A4_LOWER ),

@@ -15,7 +15,7 @@ describe( 'Ice Palace', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

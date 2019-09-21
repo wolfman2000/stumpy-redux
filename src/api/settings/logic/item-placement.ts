@@ -1,5 +1,5 @@
 enum ItemPlacement {
-  Restricted,
+  Basic,
   Advanced,
 }
 

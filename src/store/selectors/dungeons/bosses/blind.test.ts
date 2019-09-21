@@ -17,15 +17,15 @@ describe( 'The boss Blind', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
-      inventory: fallbackInventory,
-      settings: fallbackSettings,
+      dungeons: {...fallbackDungeonMaps},
+      inventory: {...fallbackInventory},
+      settings: {...fallbackSettings},
     };
   } );
 
   describe( '(on restricted settings)', () => {
     beforeEach( () => {
-      state.settings!.itemPlacement = ItemPlacement.Restricted;
+      state.settings!.itemPlacement = ItemPlacement.Basic;
     } );
 
     it( 'cannot be beaten if there is no equipment on hand.', () => {
@@ -39,7 +39,6 @@ describe( 'The boss Blind', () => {
     } );
 
     it( 'cannot be beaten with byrna alone.', () => {
-      state.inventory![InventoryId.Sword] = 0;
       state.inventory![InventoryId.Byrna] = 1;
 
       Selector( makeCanDefeatBoss() ).expect( state, DungeonId.ThievesTown ).toReturn( false );
@@ -59,9 +58,6 @@ describe( 'The boss Blind', () => {
     } );
 
     it( 'cannot be beaten if there is no equipment on hand.', () => {
-      state.inventory![InventoryId.Sword] = 0;
-      state.inventory![InventoryId.Byrna] = 0;
-
       Selector( makeCanDefeatBoss() ).expect( state, DungeonId.ThievesTown ).toReturn( false );
     } );
 
@@ -72,7 +68,6 @@ describe( 'The boss Blind', () => {
     } );
 
     it( 'can be beaten with byrna alone.', () => {
-      state.inventory![InventoryId.Sword] = 0;
       state.inventory![InventoryId.Byrna] = 1;
 
       Selector( makeCanDefeatBoss() ).expect( state, DungeonId.ThievesTown ).toReturn( true );

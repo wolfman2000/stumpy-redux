@@ -31,6 +31,7 @@ const darkOverworldEdges: Edge[] = [
   // Dark A4
   makeEdge( NodeId.DARK_A4_LOWER, NodeId.DARK_MOUNTAIN_FAIRY_ENTRANCE ),
   makeEdge( NodeId.DARK_A4_LOWER, NodeId.DARK_SPIKE_CAVE_ENTRANCE ),
+  makeEdge( NodeId.DARK_A4_LOWER, NodeId.DARK_A4_SPECTACLE_ROCK ),
   makeEdge( NodeId.DARK_A4_LOWER, NodeId.DARK_A6_LOWER_LEFT ),
   makeEdge( NodeId.DARK_A4_LOWER, NodeId.DARK_A4_UPPER, NodeConnectionId.IsInverted ),
 
@@ -165,7 +166,7 @@ const darkOverworldEdges: Edge[] = [
   makeEdge( NodeId.DARK_D1, NodeId.DARK_C2 ),
   makeEdge( NodeId.DARK_D1, NodeId.DARK_E3 ),
   makeEdge( NodeId.DARK_D1, NodeId.DARK_F2_UPPER ),
-  makeEdge( NodeId.DARK_D1, NodeId.DARK_TREASURE_GAME_ENTRANCE ),
+  makeEdge( NodeId.DARK_D1, NodeId.DARK_CHEST_GAME_ENTRANCE ),
   makeEdge( NodeId.DARK_D1, NodeId.DARK_TT_ENTRANCE, NodeConnectionId.CanActInDarkWorld ),
   makeEdge( NodeId.DARK_D1, NodeId.DARK_C_HOUSE_ENTRANCE ),
   makeEdge( NodeId.DARK_D1, NodeId.DARK_HAMMER_HOUSE_ENTRANCE, NodeConnectionId.HasHammerDarkWorld ),

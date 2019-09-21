@@ -20,20 +20,15 @@ describe( 'The player', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
-      edges: fallbackEdges,
-      inventory: fallbackInventory,
+      dungeons: {...fallbackDungeonMaps},
+      edges: [...fallbackEdges],
+      inventory: {...fallbackInventory},
       nodes: fallbackNodes,
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 
   it( 'can access the light world upon leaving the house.', () => {
-    const graph = Selector( getFullAccessibleGraph ).execute( state );
-
-    // console.log( graph );
-    expect( isNodeOnGraph( graph, NodeId.LIGHT_LINKS_HOUSE_ENTRANCE ) ).toBeTruthy();
-
     Selector( makeGetAccessibility() ).expect( state, NodeId.StartingHouse ).toReturn( available );
     Selector( makeGetAccessibility() ).expect( state, NodeId.LIGHT_F5 ).toReturn( available );
   } );

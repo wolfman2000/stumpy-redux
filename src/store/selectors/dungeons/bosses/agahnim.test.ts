@@ -15,7 +15,7 @@ describe( 'The boss Agahnim', () => {
   beforeEach( () => {
     state = {
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

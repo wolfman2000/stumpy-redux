@@ -155,12 +155,13 @@ export const isNodeOnGraph = ( graph: ISimpleNodeMap, targetNode: NodeId ): bool
     }
 
     const eachConnection = ( n: NodeId ) => {
-      if ( visited.some( ( t ) => t === n ) ) {
+      if ( finalAccessibility || visited.some( ( t ) => t === n ) ) {
         return; // No need to revisit.
       }
 
       if ( n === targetNode ) {
         finalAccessibility = true;
+        return;
       } else {
         visited.push( n );
         _util( n );

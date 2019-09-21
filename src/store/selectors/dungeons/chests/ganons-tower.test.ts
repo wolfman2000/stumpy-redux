@@ -15,7 +15,7 @@ describe( 'Ganon\'s Tower', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

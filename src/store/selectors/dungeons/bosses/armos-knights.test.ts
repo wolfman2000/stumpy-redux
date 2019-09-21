@@ -17,9 +17,9 @@ describe( 'The boss Armos Knights', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
-      inventory: fallbackInventory,
-      settings: fallbackSettings,
+      dungeons: {...fallbackDungeonMaps},
+      inventory: {...fallbackInventory},
+      settings: {...fallbackSettings},
     };
   } );
 

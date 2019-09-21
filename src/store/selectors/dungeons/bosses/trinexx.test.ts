@@ -16,9 +16,9 @@ describe( 'The boss Trinexx', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
+      dungeons: {...fallbackDungeonMaps},
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 
@@ -59,7 +59,7 @@ describe( 'The boss Trinexx', () => {
 
       describe( '', () => {
         beforeEach( () => {
-          state.settings!.itemPlacement = ItemPlacement.Restricted;
+          state.settings!.itemPlacement = ItemPlacement.Basic;
         } );
 
         it( 'cannot be taken out by master sword alone when restricted.', () => {

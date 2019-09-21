@@ -16,7 +16,7 @@ describe( 'The final boss Ganon', () => {
   beforeEach( () => {
     state = {
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 
@@ -55,7 +55,7 @@ describe( 'The final boss Ganon', () => {
 
     describe( '', () => {
       beforeEach( () => {
-        state.settings!.itemPlacement = ItemPlacement.Restricted;
+        state.settings!.itemPlacement = ItemPlacement.Basic;
         state.settings!.swords = Swords.Randomized;
       } );
 

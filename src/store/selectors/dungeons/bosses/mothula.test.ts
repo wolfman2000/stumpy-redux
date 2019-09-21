@@ -16,15 +16,15 @@ describe( 'The boss Mothula', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
+      dungeons: {...fallbackDungeonMaps},
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 
   describe( '(in the restricted set)', () => {
     beforeEach( () => {
-      state.settings!.itemPlacement = ItemPlacement.Restricted;
+      state.settings!.itemPlacement = ItemPlacement.Basic;
     } );
 
     it( 'cannot be beaten if there is no equipment on hand.', () => {

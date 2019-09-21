@@ -12,17 +12,26 @@ import {
 import AvailabilityLogic from '../../../api/traversal/availabilities/availability-logic';
 import NodeConnectionId from '../../../api/traversal/nodes/node-connection-id';
 
-import { isInverted, isSwordless } from '../settings';
+import { isInverted, isRestrictedItemPlacement, isSwordless } from '../settings';
 
 import { Medallion } from '../../../api/dungeon/medallion';
 import { hasAllCrystals, hasAllPendants, hasAllPyramidCrystals, isCastleTowerDefeated } from '../dungeons/bosses';
 import { getMiseryMireMedallionEntry, getTurtleRockMedallionEntry } from '../dungeons/medallions';
-import { canBreakCastleTowerBarrier, hasEitherCane, hasFireSource, hasPrimaryMelee, hasProjectile } from '../inventory';
+import {
+  canBreakCastleTowerBarrier,
+  canCastEtherWhenever,
+  hasEitherCane,
+  hasFireSource,
+  hasPrimaryMelee,
+  hasProjectile,
+  hasSpikeCaveProtection,
+} from '../inventory';
 import { hasBomb, hasBombsForDarkWorld, hasBombsForLightWorld } from '../inventory/bomb';
 import { hasBombosForDarkWorld } from '../inventory/bombos';
 import { hasBook, hasBookForLightWorld } from '../inventory/book';
 import { hasBoots, hasBootsForDarkWorld, hasBootsForLightWorld } from '../inventory/boots';
 import { hasBottles } from '../inventory/bottles';
+import { hasCape } from '../inventory/cape';
 import { hasEtherForDarkWorld } from '../inventory/ether';
 import { hasFireRod, hasFireRodForDarkWorld } from '../inventory/fire-rod';
 import { hasFlippers } from '../inventory/flippers';
@@ -107,6 +116,12 @@ const canActInDarkWorld = createSelector(
   isGoodOrUnavailable,
 );
 
+const canCrossSpikeCave = createSelector(
+  hasSpikeCaveProtection,
+  hasGlove,
+  ( spikes, glove ) => isGoodOrUnavailable( spikes && glove ),
+);
+
 const hasLightSource = createSelector(
   hasLantern,
   isGoodOrGlitched,
@@ -169,6 +184,11 @@ const hasHookshotLightWorld = createSelector(
 
 const hasHookshotDarkWorld = createSelector(
   hasHookshotForDarkWorld,
+  isGoodOrUnavailable,
+);
+
+const hasMushroomItem = createSelector(
+  hasMushroom,
   isGoodOrUnavailable,
 );
 
@@ -259,6 +279,51 @@ const hasBootsOrBombs = createSelector(
   ( bomb, boot ) => isGoodOrUnavailable( bomb || boot ),
 );
 
+const hasBootsOrHookshot = createSelector(
+  hasBoots,
+  hasHookshot,
+  ( boot, hook ) => isGoodOrUnavailable( boot || hook ),
+);
+
+const hasHookshotOrHover = createSelector(
+  hasHookshot,
+  hasBoots,
+  ( hook, boot ) => {
+    if ( hook ) {
+      return available;
+    }
+    if ( boot ) {
+      return availableWithGlitches;
+    }
+    return unavailable;
+  },
+);
+
+const canCrossInvisibleBridge = createSelector(
+  isRestrictedItemPlacement,
+  canCastEtherWhenever,
+  ( restricted, ether ) => {
+    if ( !restricted ) {
+      return available;
+    }
+
+    return isGoodOrUnavailable( ether );
+  },
+);
+
+const canCrossBumperCave = createSelector(
+  isRestrictedItemPlacement,
+  hasCape,
+  hasHookshot,
+  ( restricted, cape, hookshot ) => {
+    if ( !cape ) {
+      return unavailable;
+    }
+
+    return isGoodOrUnavailable( !restricted || hookshot );
+  },
+);
+
 const canDefeatMiniMoldorms = createSelector(
   hasSword,
   hasHammer,
@@ -312,10 +377,12 @@ const hasReliableProjectile = createSelector(
 );
 
 const canPullPedestal = createSelector(
+  isRestrictedItemPlacement,
   hasAllPendants,
   hasBook,
-  ( pendants, book ) => {
-    if ( pendants ) {
+  ( basic, pendants, book ) => {
+    const canPull = pendants && ( !basic || book );
+    if ( canPull ) {
       return available;
     }
     if ( book ) {
@@ -544,6 +611,7 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.HasBombsDarkWorld, hasBombsDarkWorld ],
   [ NodeConnectionId.HasHookshotLightWorld, hasHookshotLightWorld ],
   [ NodeConnectionId.HasHookshotDarkWorld, hasHookshotDarkWorld ],
+  [ NodeConnectionId.HasMushroom, hasMushroomItem ],
   [ NodeConnectionId.HasShovelLightWorld, hasShovelLightWorld ],
   [ NodeConnectionId.HasFireRodDarkWorld, hasFireRodDarkWorld ],
   [ NodeConnectionId.HasHammerLightWorld, hasHammerLightWorld ],
@@ -568,6 +636,7 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
 
   [ NodeConnectionId.CanDefeatMiniMoldorms, canDefeatMiniMoldorms ],
   [ NodeConnectionId.CanKnockItemOffTorch, canKnockItemOffTorch ],
+  [ NodeConnectionId.HasSpikeCaveProtection, canCrossSpikeCave ],
   [ NodeConnectionId.HasLightSource, hasLightSource ],
   [ NodeConnectionId.HasTorchLightSource, hasTorchLightSource ],
   [ NodeConnectionId.CanMakeBlocksDisappear, canMakeBlocksDisappear ],
@@ -575,6 +644,10 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
 
   [ NodeConnectionId.CanBombJumpOrHover, canBombJumpOrHover ],
   [ NodeConnectionId.HasBootsOrBombs, hasBootsOrBombs ],
+  [ NodeConnectionId.HasBootsOrHookshot, hasBootsOrHookshot ],
+  [ NodeConnectionId.HasHookshotOrHover, hasHookshotOrHover ],
+  [ NodeConnectionId.CanCrossInvisibleBridge, canCrossInvisibleBridge ],
+  [ NodeConnectionId.CanCrossBumperCave, canCrossBumperCave ],
   [ NodeConnectionId.HasPowderOrFake, hasPowderOrFake ],
   [ NodeConnectionId.CanHoverInLightWorld, canHoverInLightWorld ],
   [ NodeConnectionId.CanHoverInDarkWorld, canHoverInDarkWorld ],

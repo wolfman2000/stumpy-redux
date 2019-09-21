@@ -19,8 +19,8 @@ describe( 'The sword based selectors', () => {
 
   beforeEach( () => {
     state = {
-      inventory: fallbackInventory,
-      settings: fallbackSettings,
+      inventory: {...fallbackInventory},
+      settings: {...fallbackSettings},
     };
   } );
 
@@ -79,8 +79,8 @@ describe( 'Swords themselves', () => {
 
   beforeEach( () => {
     state = {
-      inventory: fallbackInventory,
-      settings: fallbackSettings,
+      inventory: {...fallbackInventory},
+      settings: {...fallbackSettings},
     };
   } );
 

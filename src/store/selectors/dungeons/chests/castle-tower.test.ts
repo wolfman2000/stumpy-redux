@@ -15,7 +15,7 @@ describe( 'The Castle Tower', () => {
 
   beforeEach( () => {
     state = {
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

@@ -15,7 +15,7 @@ describe( 'The magic capacity', () => {
   beforeEach( () => {
     state = {
       inventory: {},
-      settings: fallbackSettings,
+      settings: {...fallbackSettings},
     };
   } );
 

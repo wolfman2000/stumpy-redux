@@ -13,8 +13,8 @@ describe( 'The dungeons', () => {
 
   beforeEach( () => {
     state = {
-      dungeons: fallbackDungeonMaps,
-      settings: fallbackSettings,
+      dungeons: {...fallbackDungeonMaps},
+      settings: {...fallbackSettings},
     };
   } );
 
