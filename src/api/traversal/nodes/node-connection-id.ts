@@ -90,6 +90,39 @@ enum NodeConnectionId {
   HasKeyForHeraBasement,
   HasBigKeyForHera,
 
+  CanMimicBottleClip,
+  CanMimicClip,
+  CanEnterFrontPodDoor,
+  CanAccessBigKeyInPod,
+  CanAccessPodParty,
+  CanAccessPodMaze,
+  CanAccessPodMazeBackward,
+  CanAccessHarmlessHallway,
+  CanShootEyeStatue,
+  CanAccessFinalPodSection,
+  HasBigKeyForPod,
+
+  CanSwimToSwampStart,
+  CanEnterInfernalSwampDoor,
+  HasBigKeyForSwamp,
+
+  CanLightRodTorches,
+  HasBigKeyForSkull,
+
+  HasSmallKeyForThieves,
+  HasBigKeyForThieves,
+
+  CanDefeatFreezors,
+  CanCrossIceSpikeField,
+  CanHookshotThroughBlocks,
+  HasBigKeyForIce,
+
+  HasBigKeyForMire,
+
+  HasBigKeyForTurtle,
+
+  HasBigKeyForGanon,
+
   HasReliableWeapon,
   CanCutCurtainWall,
 }

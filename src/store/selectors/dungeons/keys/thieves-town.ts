@@ -10,7 +10,7 @@ export const getThievesTownSmallKeys = createSelector(
   getSmallKeys,
 );
 
-export const canEnterBigChestRoom = createSelector(
+export const canEnterThievesBigChestRoom = createSelector(
   getThievesTownSmallKeys,
   has1Key,
 );
