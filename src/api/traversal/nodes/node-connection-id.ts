@@ -43,6 +43,7 @@ enum NodeConnectionId {
   HasBootsOrBombs,
   HasBootsOrHookshot,
   HasHookshotOrHover,
+  HasHookshotOrBombHover,
   CanCrossInvisibleBridge,
   CanCrossBumperCave,
   CanKnockItemOffTorch,
@@ -52,6 +53,7 @@ enum NodeConnectionId {
   CanHoverInDarkWorld,
   HasLightSource,
   HasTorchLightSource,
+  HasStandardTorchLightSource,
   CanMakeBlocksDisappear,
   HasReliableProjectile,
 
@@ -73,6 +75,23 @@ enum NodeConnectionId {
   CanGetItemsAfterWaterfall,
   CanEnterMiseryMire,
   CanEnterTurtleRock,
+
+  CanOpenLockedDoorInSewers,
+
+  CanAccessTowerMaze,
+  CanAccessTopOfCastleTower,
+
+  HasBigKeyForEastern,
+  CanDefeatRedEyegores,
+
+  HasKeyForDesertDungeonItems,
+  HasBigKeyForDesert,
+
+  HasKeyForHeraBasement,
+  HasBigKeyForHera,
+
+  HasReliableWeapon,
+  CanCutCurtainWall,
 }
 
 export default NodeConnectionId;

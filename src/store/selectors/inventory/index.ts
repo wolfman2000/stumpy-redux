@@ -3,8 +3,8 @@ import { createSelector } from 'reselect';
 import {
   isExpertItemFunctionality,
   isHardItemFunctionality,
-  isInverted,
   isNormalItemFunctionality,
+  isRestrictedItemPlacement,
   isSwordless,
 } from '../settings';
 
@@ -64,6 +64,13 @@ export const hasFireSource = createSelector(
   hasFireRod,
   hasLantern,
   ( fire, lamp ) => fire || lamp,
+);
+
+export const hasTorchFireSource = createSelector(
+  isRestrictedItemPlacement,
+  hasFireRod,
+  hasLantern,
+  ( restricted, rod, lamp ) => lamp || ( !restricted && rod ),
 );
 
 export const hasFreezorWeakness = createSelector(

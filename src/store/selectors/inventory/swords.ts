@@ -63,3 +63,9 @@ export const hasGoldenSword = createSelector(
   hasSword,
   ( normal, sword, has ) => normal && has && sword > 3,
 );
+
+export const hasSwordOrSwordless = createSelector(
+  isSwordless,
+  hasSword,
+  ( less, sword ) => less || sword,
+);

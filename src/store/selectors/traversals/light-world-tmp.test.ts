@@ -47,8 +47,7 @@ describe( 'The light world', () => {
     Selector( makeGetAccessibility() ).expect( state, NodeId.DARK_D4_OUTER ).toReturn( available );
   } );
 
-  // TODO: Fix this test once Hyrule Castle is designed.
-  xit( 'has a barrier that can be broken with a hammer in swordless mode.', () => {
+  it( 'has a barrier that can be broken with a hammer in swordless mode.', () => {
     state.settings!.swords = Swords.Swordless;
     state.inventory![InventoryId.Hammer] = 1;
   } );
