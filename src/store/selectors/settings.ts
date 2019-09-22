@@ -71,6 +71,11 @@ export const isSwordless = createSelector(
   ( sword ) => sword === Swords.Swordless,
 );
 
+export const isStandard = createSelector(
+  getGameType,
+  ( type ) => type === GameType.Standard,
+);
+
 export const isInverted = createSelector(
   getGameType,
   ( type ) => type === GameType.Inverted,

@@ -12,11 +12,17 @@ import {
 import AvailabilityLogic from '../../../api/traversal/availabilities/availability-logic';
 import NodeConnectionId from '../../../api/traversal/nodes/node-connection-id';
 
-import { isInverted, isRestrictedItemPlacement, isSwordless } from '../settings';
+import { isInverted, isRestrictedItemPlacement, isStandard, isSwordless } from '../settings';
 
 import { Medallion } from '../../../api/dungeon/medallion';
 import { hasAllCrystals, hasAllPendants, hasAllPyramidCrystals, isCastleTowerDefeated } from '../dungeons/bosses';
+import { canAccessAgahnim, canAccessSecondChest } from '../dungeons/keys/castle-tower';
+import { canEnterEastDesertWing, hasDesertPalaceBigKey } from '../dungeons/keys/desert-palace';
+import { hasEasternPalaceBigKey } from '../dungeons/keys/eastern-palace';
+import { hasSewerKey } from '../dungeons/keys/hyrule-castle';
+import { canEnterBackBasement, hasTowerOfHeraBigKey } from '../dungeons/keys/tower-of-hera';
 import { getMiseryMireMedallionEntry, getTurtleRockMedallionEntry } from '../dungeons/medallions';
+
 import {
   canBreakCastleTowerBarrier,
   canCastEtherWhenever,
@@ -24,13 +30,16 @@ import {
   hasFireSource,
   hasPrimaryMelee,
   hasProjectile,
+  hasReliableWeapon,
   hasSpikeCaveProtection,
+  hasTorchFireSource,
 } from '../inventory';
 import { hasBomb, hasBombsForDarkWorld, hasBombsForLightWorld } from '../inventory/bomb';
 import { hasBombosForDarkWorld } from '../inventory/bombos';
 import { hasBook, hasBookForLightWorld } from '../inventory/book';
 import { hasBoots, hasBootsForDarkWorld, hasBootsForLightWorld } from '../inventory/boots';
 import { hasBottles } from '../inventory/bottles';
+import { hasBow } from '../inventory/bow-and-silvers';
 import { hasCape } from '../inventory/cape';
 import { hasEtherForDarkWorld } from '../inventory/ether';
 import { hasFireRod, hasFireRodForDarkWorld } from '../inventory/fire-rod';
@@ -54,7 +63,7 @@ import { hasPowder } from '../inventory/powder';
 import { hasQuakeForDarkWorld } from '../inventory/quake';
 import { hasShovelForLightWorld } from '../inventory/shovel';
 import { hasSomaria } from '../inventory/somaria';
-import { hasMasterSword, hasSword } from '../inventory/swords';
+import { hasMasterSword, hasSword, hasSwordOrSwordless } from '../inventory/swords';
 
 const always = ( _: StumpyState ): AvailabilityLogic => {
   return available;
@@ -116,6 +125,16 @@ const canActInDarkWorld = createSelector(
   isGoodOrUnavailable,
 );
 
+const hasReliableWeaponCheck = createSelector(
+  hasReliableWeapon,
+  isGoodOrUnavailable,
+);
+
+const canCutCurtainWall = createSelector(
+  hasSwordOrSwordless,
+  isGoodOrUnavailable,
+);
+
 const canCrossSpikeCave = createSelector(
   hasSpikeCaveProtection,
   hasGlove,
@@ -130,6 +149,12 @@ const hasLightSource = createSelector(
 const hasTorchLightSource = createSelector(
   hasFireSource,
   isGoodOrGlitched,
+);
+
+const hasStandardTorchLightSource = createSelector(
+  isStandard,
+  hasTorchFireSource,
+  ( standard, fire ) => isGoodOrGlitched( standard || fire ),
 );
 
 const isTabletAccessible = createSelector(
@@ -293,6 +318,21 @@ const hasHookshotOrHover = createSelector(
       return available;
     }
     if ( boot ) {
+      return availableWithGlitches;
+    }
+    return unavailable;
+  },
+);
+
+const hasHookshotOrBombHover = createSelector(
+  hasHookshot,
+  hasBoots,
+  hasBomb,
+  ( hook, boot, bomb ) => {
+    if ( hook ) {
+      return available;
+    }
+    if ( boot || bomb ) {
       return availableWithGlitches;
     }
     return unavailable;
@@ -600,6 +640,69 @@ const canEnterTurtleRock = createSelector(
   canEnterMedallionDungeon,
 );
 
+const canOpenLockedDoorInSewers = createSelector(
+  isStandard,
+  hasSewerKey,
+  hasTorchFireSource,
+  ( standard, key, fire ) => {
+    if ( standard ) {
+      return available;
+    }
+    if ( !key ) {
+      return unavailable;
+    }
+    return isGoodOrGlitched( fire );
+  },
+);
+
+const canAccessTowerMaze = createSelector(
+  canAccessSecondChest,
+  isGoodOrUnavailable,
+);
+
+const canAccessTopOfCastleTower = createSelector(
+  canAccessAgahnim,
+  hasFireSource,
+  ( key, fire ) => {
+    if ( !key ) {
+      return unavailable;
+    }
+
+    return isGoodOrGlitched( fire );
+  },
+);
+
+const hasBigKeyForEastern = createSelector(
+  hasEasternPalaceBigKey,
+  isGoodOrUnavailable,
+);
+
+// TODO: Maybe add the enemizer flag set?
+const canDefeatRedEyegores = createSelector(
+  hasBow,
+  isGoodOrUnavailable,
+);
+
+const hasKeyForDesertDungeonItems = createSelector(
+  canEnterEastDesertWing,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForDesert = createSelector(
+  hasDesertPalaceBigKey,
+  isGoodOrUnavailable,
+);
+
+const hasKeyForHeraBasement = createSelector(
+  canEnterBackBasement,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForHera = createSelector(
+  hasTowerOfHeraBigKey,
+  isGoodOrUnavailable,
+);
+
 const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => AvailabilityLogic>( [
   [ NodeConnectionId.Always, always ],
   [ NodeConnectionId.AlwaysVisible, alwaysVisible ],
@@ -634,11 +737,15 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.CanActInLightWorld, canActInLightWorld ],
   [ NodeConnectionId.CanActInDarkWorld, canActInDarkWorld ],
 
+  [ NodeConnectionId.HasReliableWeapon, hasReliableWeaponCheck ],
+  [ NodeConnectionId.CanCutCurtainWall, canCutCurtainWall ],
+
   [ NodeConnectionId.CanDefeatMiniMoldorms, canDefeatMiniMoldorms ],
   [ NodeConnectionId.CanKnockItemOffTorch, canKnockItemOffTorch ],
   [ NodeConnectionId.HasSpikeCaveProtection, canCrossSpikeCave ],
   [ NodeConnectionId.HasLightSource, hasLightSource ],
   [ NodeConnectionId.HasTorchLightSource, hasTorchLightSource ],
+  [ NodeConnectionId.HasStandardTorchLightSource, hasStandardTorchLightSource ],
   [ NodeConnectionId.CanMakeBlocksDisappear, canMakeBlocksDisappear ],
   [ NodeConnectionId.HasReliableProjectile, hasReliableProjectile ],
 
@@ -646,6 +753,7 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.HasBootsOrBombs, hasBootsOrBombs ],
   [ NodeConnectionId.HasBootsOrHookshot, hasBootsOrHookshot ],
   [ NodeConnectionId.HasHookshotOrHover, hasHookshotOrHover ],
+  [ NodeConnectionId.HasHookshotOrBombHover, hasHookshotOrBombHover ],
   [ NodeConnectionId.CanCrossInvisibleBridge, canCrossInvisibleBridge ],
   [ NodeConnectionId.CanCrossBumperCave, canCrossBumperCave ],
   [ NodeConnectionId.HasPowderOrFake, hasPowderOrFake ],
@@ -669,6 +777,20 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.CanGetItemsAfterWaterfall, canGetItemsAfterWaterfall ],
   [ NodeConnectionId.CanEnterMiseryMire, canEnterMiseryMire ],
   [ NodeConnectionId.CanEnterTurtleRock, canEnterTurtleRock ],
+
+  [ NodeConnectionId.CanOpenLockedDoorInSewers, canOpenLockedDoorInSewers ],
+
+  [ NodeConnectionId.CanAccessTowerMaze, canAccessTowerMaze ],
+  [ NodeConnectionId.CanAccessTopOfCastleTower, canAccessTopOfCastleTower ],
+
+  [ NodeConnectionId.HasBigKeyForEastern, hasBigKeyForEastern ],
+  [ NodeConnectionId.CanDefeatRedEyegores, canDefeatRedEyegores ],
+
+  [ NodeConnectionId.HasKeyForDesertDungeonItems, hasKeyForDesertDungeonItems ],
+  [ NodeConnectionId.HasBigKeyForDesert, hasBigKeyForDesert ],
+
+  [ NodeConnectionId.HasKeyForHeraBasement, hasKeyForHeraBasement ],
+  [ NodeConnectionId.HasBigKeyForHera, hasBigKeyForHera ],
 ] );
 
 export default traversalTable;

@@ -15,22 +15,11 @@ import {
 } from '../../../api/traversal/availabilities';
 import AvailabilityLogic from '../../../api/traversal/availabilities/availability-logic';
 import Edge from '../../../api/traversal/edges/edge';
-import NodeConnectionId from '../../../api/traversal/nodes/node-connection-id';
 import NodeId from '../../../api/traversal/nodes/node-id';
 
 const getEdges = ( state: StumpyState ) => state.edges;
 
 export const getState = ( _: StumpyState ) => _; // Identity.
-
-interface INodeConnection {
-  canConnect: NodeConnectionId;
-  node: NodeId;
-}
-
-interface INodeData {
-  isClaimed?: boolean;
-  connections: INodeConnection[];
-}
 
 interface ISimpleNodeMap {
   [id: number]: NodeId[];
@@ -199,11 +188,4 @@ export const makeGetAccessibility = () => {
 
     return unavailable;
   };
-  /*
-  return createSelector(
-    getState,
-    getNodeId,
-    getAccessibility,
-  );
-  */
 };
