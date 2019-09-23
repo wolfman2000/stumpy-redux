@@ -21,6 +21,7 @@ import { hasHammer } from './hammer';
 import { hasIceRod } from './ice-rod';
 import { hasLantern } from './lantern';
 import { hasMagic } from './magic';
+import { hasMirrorShield } from './shields';
 import { hasSomaria } from './somaria';
 import { hasMasterSword, hasSword } from './swords';
 
@@ -175,4 +176,19 @@ export const canCastEtherWhenever = createSelector(
   hasEther,
   hasSword,
   ( ether, sword ) => ether && sword,
+);
+
+export const hasLaserProtection = createSelector(
+  isRestrictedItemPlacement,
+  isNormalItemFunctionality,
+  hasMirrorShield,
+  hasCape,
+  hasByrna,
+  ( restricted, normal, shield, cape, byrna ) => {
+    if ( !restricted ) {
+      return true;
+    }
+
+    return ( byrna && normal ) || shield || cape;
+  },
 );

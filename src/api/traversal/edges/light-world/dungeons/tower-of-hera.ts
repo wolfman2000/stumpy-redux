@@ -15,7 +15,7 @@ const towerOfHeraEdges: Edge[] = [
   makeEdge( NodeId.TOH_02_LOBBY, NodeId.TOH_03_START ),
 
   makeEdge( NodeId.TOH_01_TILE_ROOM, NodeId.TOH_01_MINI_MOLDORM ),
-  makeEdge( NodeId.TOH_01_MINI_MOLDORM, NodeId.TOH_01_BIG_KEY, NodeConnectionId.HasTorchLightSource ),
+  makeEdge( NodeId.TOH_01_MINI_MOLDORM, NodeId.TOH_01_BIG_KEY, NodeConnectionId.CanLightTorch ),
 
   makeEdge( NodeId.TOH_03_START, NodeId.TOH_03_BIG_KEY_DOOR ),
   makeEdge( NodeId.TOH_03_BIG_KEY_DOOR, NodeId.TOH_03_END, NodeConnectionId.HasBigKeyForHera ),

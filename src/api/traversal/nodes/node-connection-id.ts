@@ -41,7 +41,7 @@ enum NodeConnectionId {
   CanDefeatMiniMoldorms,
   CanBombJumpOrHover,
   HasBootsOrBombs,
-  HasBootsOrHookshot,
+  HasHookshotOrAdvancedBoots,
   HasHookshotOrHover,
   HasHookshotOrBombHover,
   CanCrossInvisibleBridge,
@@ -117,8 +117,15 @@ enum NodeConnectionId {
   CanHookshotThroughBlocks,
   HasBigKeyForIce,
 
+  CanLightTorch,
+  HasCaneOfSomaria,
   HasBigKeyForMire,
 
+  CanCrossHugeSomariaGaps,
+  CanCrossSmallSomariaGaps,
+  CanCrossDarkSomariaGaps,
+  CanLightTorchGaps,
+  HasLaserEyeProtection,
   HasBigKeyForTurtle,
 
   HasBigKeyForGanon,
