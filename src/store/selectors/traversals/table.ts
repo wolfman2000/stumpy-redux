@@ -23,15 +23,25 @@ import { hasSewerKey } from '../dungeons/keys/hyrule-castle';
 import { canEnterBackBasement, hasTowerOfHeraBigKey } from '../dungeons/keys/tower-of-hera';
 import { getMiseryMireMedallionEntry, getTurtleRockMedallionEntry } from '../dungeons/medallions';
 
+import { hasGanonsTowerBigKey } from '../dungeons/keys/ganons-tower';
+import { hasIcePalaceBigKey } from '../dungeons/keys/ice-palace';
+import { hasMiseryMireBigKey } from '../dungeons/keys/misery-mire';
+import { canEnterPodFrontDoor, canReachBack, canReachDarkMaze, hasPalaceOfDarknessBigKey } from '../dungeons/keys/palace-of-darkness';
+import { hasSkullWoodsBigKey } from '../dungeons/keys/skull-woods';
+import { canEnterFrontSwampDoor, hasSwampPalaceBigKey } from '../dungeons/keys/swamp-palace';
+import { canEnterThievesBigChestRoom, hasThievesTownBigKey } from '../dungeons/keys/thieves-town';
+import { hasTurtleRockBigKey } from '../dungeons/keys/turtle-rock';
 import {
   canBreakCastleTowerBarrier,
   canCastEtherWhenever,
   hasEitherCane,
   hasFireSource,
+  hasFreezorWeakness,
   hasPrimaryMelee,
   hasProjectile,
   hasReliableWeapon,
   hasSpikeCaveProtection,
+  hasSpikeProtection,
   hasTorchFireSource,
 } from '../inventory';
 import { hasBomb, hasBombsForDarkWorld, hasBombsForLightWorld } from '../inventory/bomb';
@@ -703,6 +713,181 @@ const hasBigKeyForHera = createSelector(
   isGoodOrUnavailable,
 );
 
+// TODO: Double check enemizer settings.
+const canMimicBottleClip = createSelector(
+  hasBottles,
+  hasBow,
+  ( bottle, bow ) => {
+    if ( bow ) {
+      return available;
+    }
+
+    // TODO: Look into excluding either trick with options.
+    if ( bottle ) {
+      return availableWithGlitches;
+    }
+
+    return availableWithGlitches;
+  },
+);
+
+// TODO: Double check enemizer settings.
+const canMimicClip = createSelector(
+  hasBow,
+  ( bow ) => {
+    if ( bow ) {
+      return available;
+    }
+
+    return availableWithGlitches;
+  },
+);
+
+const canEnterFrontPodDoor = createSelector(
+  canEnterPodFrontDoor,
+  isGoodOrUnavailable,
+);
+
+const canAccessPodParty = createSelector(
+  canReachBack,
+  isGoodOrUnavailable,
+);
+
+const canAccessPodMaze = createSelector(
+  canReachDarkMaze,
+  hasLantern,
+  ( keys, lamp ) => {
+    if ( !keys ) {
+      return unavailable;
+    }
+    return isGoodOrGlitched( lamp );
+  },
+);
+
+const canAccessPodMazeBackward = createSelector(
+  hasBomb,
+  hasLantern,
+  ( bomb, lamp ) => {
+    if ( !bomb ) {
+      return unavailable;
+    }
+
+    return isGoodOrGlitched( lamp );
+  },
+);
+
+const canShootEyeStatue = createSelector(
+  hasBow,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForPod = createSelector(
+  hasPalaceOfDarknessBigKey,
+  isGoodOrUnavailable,
+);
+
+const canAccessFinalPodSection = createSelector(
+  hasHammer,
+  hasLantern,
+  hasProjectile,
+  ( hammer, lamp, projectile ) => {
+    if ( !hammer || !projectile ) {
+      return unavailable;
+    }
+
+    return isGoodOrGlitched( lamp );
+  },
+);
+
+const canSwimToSwampStart = createSelector(
+  hasMirror,
+  hasFlippers,
+  ( mirror, flippers ) => {
+    if ( !flippers ) {
+      return unavailable;
+    }
+    // TODO: Look into alternatives for entrance rando.
+    return isGoodOrUnavailable( mirror );
+  },
+);
+
+const canEnterInfernalSwampDoor = createSelector(
+  canEnterFrontSwampDoor,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForSwamp = createSelector(
+  hasSwampPalaceBigKey,
+  isGoodOrUnavailable,
+);
+
+const canLightRodTorches = createSelector(
+  hasFireRod,
+  hasLantern,
+  hasBomb,
+  hasBoots,
+  ( rod, lamp, bomb, boots ) => {
+    if ( rod ) {
+      return available;
+    }
+    if ( lamp && ( bomb || boots ) ) {
+      return availableWithGlitches;
+    }
+    return unavailable;
+  },
+);
+
+const hasBigKeyForSkull = createSelector(
+  hasSkullWoodsBigKey,
+  isGoodOrUnavailable,
+);
+
+const hasSmallKeyForThieves = createSelector(
+  canEnterThievesBigChestRoom,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForThieves = createSelector(
+  hasThievesTownBigKey,
+  isGoodOrUnavailable,
+);
+
+const canDefeatFreezors = createSelector(
+  hasFreezorWeakness,
+  isGoodOrUnavailable,
+);
+
+const canCrossIceSpikeField = createSelector(
+  hasSpikeProtection,
+  hasHookshot,
+  ( spike, hook ) => isGoodOrGlitched( spike || hook ),
+);
+
+const canHookshotThroughBlocks = createSelector(
+  hasHookshot,
+  ( hook ) => hook ? availableWithGlitches : unavailable,
+);
+
+const hasBigKeyForIce = createSelector(
+  hasIcePalaceBigKey,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForMire = createSelector(
+  hasMiseryMireBigKey,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForTurtle = createSelector(
+  hasTurtleRockBigKey,
+  isGoodOrUnavailable,
+);
+
+const hasBigKeyForGanon = createSelector(
+  hasGanonsTowerBigKey,
+  isGoodOrUnavailable,
+);
+
 const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => AvailabilityLogic>( [
   [ NodeConnectionId.Always, always ],
   [ NodeConnectionId.AlwaysVisible, alwaysVisible ],
@@ -791,6 +976,36 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
 
   [ NodeConnectionId.HasKeyForHeraBasement, hasKeyForHeraBasement ],
   [ NodeConnectionId.HasBigKeyForHera, hasBigKeyForHera ],
+
+  [ NodeConnectionId.CanMimicBottleClip, canMimicBottleClip ],
+  [ NodeConnectionId.CanMimicClip, canMimicClip ],
+  [ NodeConnectionId.CanEnterFrontPodDoor, canEnterFrontPodDoor ],
+  [ NodeConnectionId.CanAccessPodParty, canAccessPodParty ],
+  [ NodeConnectionId.CanAccessPodMaze, canAccessPodMaze ],
+  [ NodeConnectionId.CanAccessPodMazeBackward, canAccessPodMazeBackward ],
+  [ NodeConnectionId.HasBigKeyForPod, hasBigKeyForPod ],
+  [ NodeConnectionId.CanAccessFinalPodSection, canAccessFinalPodSection ],
+  [ NodeConnectionId.CanShootEyeStatue, canShootEyeStatue ],
+
+  [ NodeConnectionId.CanSwimToSwampStart, canSwimToSwampStart ],
+  [ NodeConnectionId.CanEnterInfernalSwampDoor, canEnterInfernalSwampDoor ],
+  [ NodeConnectionId.HasBigKeyForSwamp, hasBigKeyForSwamp ],
+
+  [ NodeConnectionId.HasBigKeyForSkull, hasBigKeyForSkull ],
+
+  [ NodeConnectionId.HasSmallKeyForThieves, hasSmallKeyForThieves ],
+  [ NodeConnectionId.HasBigKeyForThieves, hasBigKeyForThieves ],
+
+  [ NodeConnectionId.CanDefeatFreezors, canDefeatFreezors ],
+  [ NodeConnectionId.CanCrossIceSpikeField, canCrossIceSpikeField ],
+  [ NodeConnectionId.CanHookshotThroughBlocks, canHookshotThroughBlocks ],
+  [ NodeConnectionId.HasBigKeyForIce, hasBigKeyForIce ],
+
+  [ NodeConnectionId.HasBigKeyForMire, hasBigKeyForMire ],
+
+  [ NodeConnectionId.HasBigKeyForTurtle, hasBigKeyForTurtle ],
+
+  [ NodeConnectionId.HasBigKeyForGanon, hasBigKeyForGanon ],
 ] );
 
 export default traversalTable;

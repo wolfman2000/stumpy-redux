@@ -10,7 +10,7 @@ export const getSwampPalaceSmallKeys = createSelector(
   getSmallKeys,
 );
 
-export const canEnterFrontDoor = createSelector(
+export const canEnterFrontSwampDoor = createSelector(
   getSwampPalaceSmallKeys,
   has1Key,
 );
