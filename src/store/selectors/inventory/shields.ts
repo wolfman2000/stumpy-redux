@@ -40,3 +40,8 @@ export const hasShield = createSelector(
   maxShield,
   ( shield, max ) => shield > 0 && shield <= max,
 );
+
+export const hasMirrorShield = createSelector(
+  getShield,
+  ( shield ) => shield === 3,
+);

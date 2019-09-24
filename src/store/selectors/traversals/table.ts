@@ -37,6 +37,7 @@ import {
   hasEitherCane,
   hasFireSource,
   hasFreezorWeakness,
+  hasLaserProtection,
   hasPrimaryMelee,
   hasProjectile,
   hasReliableWeapon,
@@ -314,10 +315,21 @@ const hasBootsOrBombs = createSelector(
   ( bomb, boot ) => isGoodOrUnavailable( bomb || boot ),
 );
 
-const hasBootsOrHookshot = createSelector(
+const hasHookshotOrAdvancedBoots = createSelector(
+  isRestrictedItemPlacement,
   hasBoots,
   hasHookshot,
-  ( boot, hook ) => isGoodOrUnavailable( boot || hook ),
+  ( basic, boot, hook ) => {
+    if ( hook ) {
+      return available;
+    }
+
+    if ( boot ) {
+      return basic ? availableWithGlitches : available;
+    }
+
+    return unavailable;
+  },
 );
 
 const hasHookshotOrHover = createSelector(
@@ -873,9 +885,65 @@ const hasBigKeyForIce = createSelector(
   isGoodOrUnavailable,
 );
 
+const canLightTorch = createSelector(
+  hasFireSource,
+  isGoodOrUnavailable,
+);
+
+const hasCaneOfSomaria = createSelector(
+  hasSomaria,
+  isGoodOrUnavailable,
+);
+
 const hasBigKeyForMire = createSelector(
   hasMiseryMireBigKey,
   isGoodOrUnavailable,
+);
+
+const canCrossHugeSomariaGaps = createSelector(
+  hasSomaria,
+  hasBoots,
+  ( somaria, boots ) => {
+    if ( somaria ) {
+      return available;
+    }
+    return boots ? availableWithGlitches : unavailable;
+  },
+);
+
+const canCrossDarkSomariaGaps = createSelector(
+  hasSomaria,
+  hasLantern,
+  hasBoots,
+  ( somaria, lantern, boots ) => {
+    if ( somaria && lantern ) {
+      return available;
+    }
+    return ( boots ) ? availableWithGlitches : unavailable;
+  },
+);
+
+const canCrossSmallSomariaGaps = createSelector(
+  hasSomaria,
+  hasBoots,
+  hasBomb,
+  ( somaria, boots, bombs ) => {
+    if ( somaria ) {
+      return available;
+    }
+    return ( boots || bombs ) ? availableWithGlitches : unavailable;
+  },
+);
+
+const canLightTorchGaps = createSelector(
+  hasSomaria,
+  hasFireRod,
+  ( somaria, rod ) => isGoodOrUnavailable( somaria && rod ),
+);
+
+const hasLaserEyeProtection = createSelector(
+  hasLaserProtection,
+  isGoodOrGlitched,
 );
 
 const hasBigKeyForTurtle = createSelector(
@@ -936,7 +1004,7 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
 
   [ NodeConnectionId.CanBombJumpOrHover, canBombJumpOrHover ],
   [ NodeConnectionId.HasBootsOrBombs, hasBootsOrBombs ],
-  [ NodeConnectionId.HasBootsOrHookshot, hasBootsOrHookshot ],
+  [ NodeConnectionId.HasHookshotOrAdvancedBoots, hasHookshotOrAdvancedBoots ],
   [ NodeConnectionId.HasHookshotOrHover, hasHookshotOrHover ],
   [ NodeConnectionId.HasHookshotOrBombHover, hasHookshotOrBombHover ],
   [ NodeConnectionId.CanCrossInvisibleBridge, canCrossInvisibleBridge ],
@@ -991,6 +1059,7 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.CanEnterInfernalSwampDoor, canEnterInfernalSwampDoor ],
   [ NodeConnectionId.HasBigKeyForSwamp, hasBigKeyForSwamp ],
 
+  [ NodeConnectionId.CanLightRodTorches, canLightRodTorches ],
   [ NodeConnectionId.HasBigKeyForSkull, hasBigKeyForSkull ],
 
   [ NodeConnectionId.HasSmallKeyForThieves, hasSmallKeyForThieves ],
@@ -1001,8 +1070,15 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.CanHookshotThroughBlocks, canHookshotThroughBlocks ],
   [ NodeConnectionId.HasBigKeyForIce, hasBigKeyForIce ],
 
+  [ NodeConnectionId.CanLightTorch, canLightTorch ],
+  [ NodeConnectionId.HasCaneOfSomaria, hasCaneOfSomaria ],
   [ NodeConnectionId.HasBigKeyForMire, hasBigKeyForMire ],
 
+  [ NodeConnectionId.CanCrossHugeSomariaGaps, canCrossHugeSomariaGaps ],
+  [ NodeConnectionId.CanCrossSmallSomariaGaps, canCrossSmallSomariaGaps ],
+  [ NodeConnectionId.CanCrossDarkSomariaGaps, canCrossDarkSomariaGaps ],
+  [ NodeConnectionId.CanLightTorchGaps, canLightTorchGaps ],
+  [ NodeConnectionId.HasLaserEyeProtection, hasLaserEyeProtection ],
   [ NodeConnectionId.HasBigKeyForTurtle, hasBigKeyForTurtle ],
 
   [ NodeConnectionId.HasBigKeyForGanon, hasBigKeyForGanon ],

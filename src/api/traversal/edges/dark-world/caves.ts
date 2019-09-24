@@ -16,7 +16,11 @@ const darkCaveEdges: Edge[] = [
 
   // Dark A6 connections
   makeEdge( NodeId.CAVE_HOOKSHOT_CAVE_BOTTOM, NodeId.DARK_HOOKSHOT_CAVE_BOTTOM ),
-  makeEdge( NodeId.CAVE_HOOKSHOT_CAVE_BOTTOM, NodeId.CAVE_HOOKSHOT_CAVE_BOOTS, NodeConnectionId.HasBootsOrHookshot ),
+  makeEdge(
+    NodeId.CAVE_HOOKSHOT_CAVE_BOTTOM,
+    NodeId.CAVE_HOOKSHOT_CAVE_BOOTS,
+    NodeConnectionId.HasHookshotOrAdvancedBoots,
+   ),
   makeEdge( NodeId.CAVE_HOOKSHOT_CAVE_BOTTOM, NodeId.CAVE_HOOKSHOT_CAVE_PIT, NodeConnectionId.CanCrossInvisibleBridge ),
 
   makeEdge(
