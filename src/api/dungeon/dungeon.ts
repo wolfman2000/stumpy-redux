@@ -31,3 +31,5 @@ export type EasternPalace = IDungeon & IBigKeyDungeon & IChangingBossDungeon;
 export type CommonDungeon = IDungeon & ISmallKeyDungeon & IBigKeyDungeon & IChangingBossDungeon;
 export type MedallionDungeon = IDungeon & ISmallKeyDungeon & IBigKeyDungeon & IMedallionDungeon;
 export type GanonsTower = IDungeon & ISmallKeyDungeon & IBigKeyDungeon & IBossDungeon;
+
+export type ZeldaDungeon = HyruleCastle | CastleTower | EasternPalace | CommonDungeon | MedallionDungeon | GanonsTower;
