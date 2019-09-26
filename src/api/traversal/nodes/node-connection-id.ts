@@ -6,6 +6,7 @@ enum NodeConnectionId {
   // Pure Settings
   IsInverted,
   IsNotInverted,
+  IsEntrance,
 
   // Pure Items
   HasHookshotLightWorld,

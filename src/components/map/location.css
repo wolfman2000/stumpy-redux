@@ -1,0 +1,51 @@
+.available {
+  --availability-fill: cyan;
+  --availability-stroke: black;
+}
+
+.unavailable {
+  --availability-fill: red;
+  --availability-stroke: black;
+}
+
+.visible {
+  --availability-fill: orange;
+  --availability-stroke: black;
+}
+
+.possible {
+  --availability-fill: gold;
+  --availability-stroke: black;
+}
+
+.glitches {
+  --availability-stroke: white;
+}
+
+.claimed {
+  --availability-fill: gray;
+  --availability-stroke: black;
+}
+
+.location {
+  fill: var(--availability-fill);
+  stroke: var(--availability-stroke);
+}
+
+div.location {
+  position: absolute;
+  --total-size: 12px;
+  width: var(--total-size);
+  height: var(--total-size);
+  margin-left: calc(var(--total-size) / -2);
+  margin-top: calc(var(--total-size) / -2);
+}
+
+div.location svg > * {
+  cursor: pointer;
+  stroke-width: 1.5rem;
+}
+
+div.location svg > polygon {
+  stroke-width: 1rem;
+}
