@@ -36,7 +36,7 @@ const LightWorld: React.FC<IWorldProps> = ( {
   };
 
   const getLocations = () => {
-    const nodes = [ NodeId.LIGHT_LINKS_HOUSE_ENTRANCE ];
+    const nodes = [ NodeId.LIGHT_LINKS_HOUSE_ENTRANCE, NodeId.LIGHT_WELL_ENTRANCE ];
 
     if ( !nodes ) {
       return <React.Fragment />;

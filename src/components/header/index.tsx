@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Container, Jumbotron } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 
 const Header: React.FC = () => {
   return (
