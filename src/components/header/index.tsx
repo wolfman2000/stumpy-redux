@@ -4,11 +4,9 @@ import { Alert, Container, Jumbotron } from 'react-bootstrap';
 const Header: React.FC = () => {
   return (
     <header>
-      <Jumbotron >
-        <Container>
-          <Alert variant='success'>Welcome to Stumpy Redux!</Alert>
-        </Container>
-      </Jumbotron>
+      <Container>
+        <Alert variant='success'>Welcome to Stumpy Redux!</Alert>
+      </Container>
     </header>
   );
 };

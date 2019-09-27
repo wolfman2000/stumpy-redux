@@ -48,8 +48,8 @@ const SingleDungeonCheckup: React.FC<IDungeonProps> = ( {
     [ dungeonId ],
   );
 
-  const dungeon = useSelector(
-    ( state: StumpyState ) => dungeonGood( state, dungeonId ),
+  const dungeon = useSelector<StumpyState, ZeldaDungeon | null>(
+    ( state ) => dungeonGood( state, dungeonId ),
   );
 
   const nodesGood = useMemo(

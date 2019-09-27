@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
+import DarkWorld from './dark-world';
 import LightWorld from './light-world';
 
 const Map: React.FC = () => {
@@ -14,7 +15,7 @@ const Map: React.FC = () => {
           <LightWorld />
         </Col>
         <Col xs={6}>
-          Dark World
+          <DarkWorld />
         </Col>
       </Row>
     </Container>
