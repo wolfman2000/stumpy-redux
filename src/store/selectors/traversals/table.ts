@@ -15,7 +15,7 @@ import NodeConnectionId from '../../../api/traversal/nodes/node-connection-id';
 import { isInverted, isRestrictedItemPlacement, isStandard, isSwordless } from '../settings';
 
 import { Medallion } from '../../../api/dungeon/medallion';
-import { hasAllCrystals, hasAllPendants, hasAllPyramidCrystals, isCastleTowerDefeated } from '../dungeons/bosses';
+import { hasAllCrystals, hasAllPendants, hasAllPyramidCrystals, hasGreenPendant, isCastleTowerDefeated } from '../dungeons/bosses';
 import { canAccessAgahnim, canAccessSecondChest } from '../dungeons/keys/castle-tower';
 import { canEnterEastDesertWing, hasDesertPalaceBigKey } from '../dungeons/keys/desert-palace';
 import { hasEasternPalaceBigKey } from '../dungeons/keys/eastern-palace';
@@ -202,6 +202,11 @@ const hasGoodDarkWorldInternal = ( inverted: boolean, moon: boolean, item: boole
   const isGood = item && ( inverted || moon );
   return isGoodOrUnavailable( isGood );
 };
+
+const hasGreenPendantItem = createSelector(
+  hasGreenPendant,
+  isGoodOrUnavailable,
+);
 
 const hasBombsLightWorld = createSelector(
   hasBombsForLightWorld,
@@ -993,6 +998,7 @@ const traversalTable = new Map<NodeConnectionId, ( state: StumpyState ) => Avail
   [ NodeConnectionId.HasReliableWeapon, hasReliableWeaponCheck ],
   [ NodeConnectionId.CanCutCurtainWall, canCutCurtainWall ],
 
+  [ NodeConnectionId.HasGreenPendant, hasGreenPendantItem ],
   [ NodeConnectionId.CanDefeatMiniMoldorms, canDefeatMiniMoldorms ],
   [ NodeConnectionId.CanKnockItemOffTorch, canKnockItemOffTorch ],
   [ NodeConnectionId.HasSpikeCaveProtection, canCrossSpikeCave ],

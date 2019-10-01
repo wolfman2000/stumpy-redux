@@ -8,9 +8,9 @@ import { StumpyState } from '../store/reducers';
 import { makeGetDungeon } from '../store/selectors/dungeons';
 import { makeGetAccessibility } from '../store/selectors/traversals';
 
-import AvailabilityLogic from '../api/traversal/availabilities/availability-logic';
-import { unavailable, available } from '../api/traversal/availabilities';
+import { available, unavailable } from '../api/traversal/availabilities';
 import Availability from '../api/traversal/availabilities/availability';
+import AvailabilityLogic from '../api/traversal/availabilities/availability-logic';
 
 interface IDungeonProps {
   dungeonId: number;

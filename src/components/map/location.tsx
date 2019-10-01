@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import AvailabilityLogic from '../../api/traversal/availabilities/availability-logic';
-import NodeId from '../../api/traversal/nodes/node-id';
 import Availability from '../../api/traversal/availabilities/availability';
+import AvailabilityLogic from '../../api/traversal/availabilities/availability-logic';
 import entranceLocations from '../../api/traversal/locations';
 import EntranceType from '../../api/traversal/nodes/entrance-type';
+import NodeId from '../../api/traversal/nodes/node-id';
 
 import { StumpyState } from '../../store/reducers';
 import { makeGetAccessibility } from '../../store/selectors/traversals';

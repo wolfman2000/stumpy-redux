@@ -39,6 +39,7 @@ enum NodeConnectionId {
   CanActInDarkWorld,
 
   // More descriptive.
+  HasGreenPendant,
   CanDefeatMiniMoldorms,
   CanBombJumpOrHover,
   HasBootsOrBombs,
