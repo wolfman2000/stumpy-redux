@@ -3,16 +3,6 @@ import EntranceType from '../nodes/entrance-type';
 import NodeConnectionId from '../nodes/node-connection-id';
 import NodeId from '../nodes/node-id';
 
-const makeSingleEntranceLocation = ( left: number, top: number, treasureNodes: NodeId[] = [] ): CssLocation => {
-  return {
-    entranceType: EntranceType.Single,
-    left,
-    top,
-    treasureNodes,
-    visibility: NodeConnectionId.IsEntrance,
-  };
-};
-
 const makeSingleAlwaysLocation = ( left: number, top: number, treasureNodes: NodeId[] = [] ): CssLocation => {
   return {
     entranceType: EntranceType.Single,
@@ -59,9 +49,14 @@ const entranceLocations: Map<NodeId, CssLocation> = new Map<NodeId, CssLocation>
     makeSingleAlwaysLocation( 61.6, 29.6, [ NodeId.CAVE_KINGS_TOMB] ),
   ],
   [
-    NodeId.LIGHT_SWAMP_ITEM,
+    NodeId.LIGHT_DAM_ENTRANCE,
     makeSingleAlwaysLocation( 46.8, 93.4, [
       NodeId.CAVE_DAM_RELEASE,
+    ] ),
+  ],
+  [
+    NodeId.LIGHT_SWAMP_ITEM,
+    makeOutsideAlwaysLocation( 44.8, 93.4, [
       NodeId.LIGHT_SWAMP_ITEM,
     ] ),
   ],
@@ -108,7 +103,7 @@ const entranceLocations: Map<NodeId, CssLocation> = new Map<NodeId, CssLocation>
   ],
   [
     NodeId.LIGHT_PARADOX_TOP_ENTRANCE,
-    makeMultipleAlwaysLocation( 82.8, 17, [
+    makeMultipleAlwaysLocation( 85.8, 20.1, [
       NodeId.CAVE_PARADOX_SMALL_VAULT,
       NodeId.CAVE_PARADOX_LARGE_VAULT,
     ] ),
@@ -235,6 +230,12 @@ const entranceLocations: Map<NodeId, CssLocation> = new Map<NodeId, CssLocation>
     ] ),
   ],
   [
+    NodeId.LIGHT_DESERT_LEDGE_ITEM,
+    makeOutsideAlwaysLocation( 3, 91, [
+      NodeId.LIGHT_DESERT_LEDGE_ITEM,
+    ] ),
+  ],
+  [
     NodeId.LIGHT_A6_ISLAND,
     makeOutsideAlwaysLocation( 80.4, 3, [
       NodeId.LIGHT_MOUNTAIN_ISLAND_ITEM,
@@ -242,7 +243,7 @@ const entranceLocations: Map<NodeId, CssLocation> = new Map<NodeId, CssLocation>
   ],
   [
     NodeId.LIGHT_RACE_GAME_ITEM,
-    makeOutsideAlwaysLocation( 3.6, 59.8, [
+    makeOutsideAlwaysLocation( 3.6, 69.8, [
       NodeId.LIGHT_RACE_GAME_ITEM,
     ] ),
   ],
@@ -274,6 +275,13 @@ const entranceLocations: Map<NodeId, CssLocation> = new Map<NodeId, CssLocation>
     NodeId.LIGHT_WATERFALL,
     makeSingleAlwaysLocation( 89.8, 14.7, [
       NodeId.LIGHT_WATERFALL,
+    ] ),
+  ],
+  [
+    NodeId.LIGHT_UNCLE_ENTRANCE,
+    makePitEntranceAlwaysLocation( 59.6, 41.8, [
+      NodeId.CAVE_UNCLE_ENTRANCE,
+      NodeId.CAVE_UNCLE_EXIT,
     ] ),
   ],
 

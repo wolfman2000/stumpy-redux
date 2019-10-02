@@ -271,6 +271,7 @@ const lightOverworldEdges: Edge[] = [
 
   // Light F1 connections
   makeEdge( NodeId.LIGHT_F1_LOWER, NodeId.LIGHT_F2_LOWER ),
+  makeEdge( NodeId.LIGHT_F1_LOWER, NodeId.LIGHT_RACE_GAME_ITEM, NodeConnectionId.AlwaysVisible ),
 
   makeEdge( NodeId.LIGHT_F1_UPPER, NodeId.LIGHT_F1_LOWER ),
   makeEdge( NodeId.LIGHT_F1_UPPER, NodeId.LIGHT_F1_GAME ),
@@ -341,6 +342,7 @@ const lightOverworldEdges: Edge[] = [
 
   // Light G1 connections
   makeEdge( NodeId.LIGHT_G1, NodeId.LIGHT_H3 ),
+  makeEdge( NodeId.LIGHT_G1, NodeId.LIGHT_DESERT_LEDGE_ITEM, NodeConnectionId.AlwaysVisible ),
   makeEdge( NodeId.LIGHT_G1, NodeId.LIGHT_G1_NE, NodeConnectionId.IsInverted ),
   makeEdge( NodeId.LIGHT_G1, NodeId.LIGHT_G1_GATE_SOUTH ),
   makeEdge( NodeId.LIGHT_G1, NodeId.LIGHT_AGINAH_ENTRANCE ),
@@ -411,6 +413,7 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_G6_NW, NodeId.LIGHT_G6_WATER, NodeConnectionId.HasFlippers ),
   makeEdge( NodeId.LIGHT_G6_NW, NodeId.LIGHT_LAKE_FORTUNE_TELLER_ENTRANCE ),
   makeEdge( NodeId.LIGHT_G6_NW, NodeId.LIGHT_LAKE_SHOP_ENTRANCE ),
+  makeEdge( NodeId.LIGHT_G6_NW, NodeId.LIGHT_LAKE_ISLAND_ITEM, NodeConnectionId.AlwaysVisible ),
 
   makeEdge( NodeId.LIGHT_G6_NE, NodeId.LIGHT_F7 ),
   makeEdge( NodeId.LIGHT_G6_NE, NodeId.LIGHT_G6_WATER, NodeConnectionId.HasFlippers ),

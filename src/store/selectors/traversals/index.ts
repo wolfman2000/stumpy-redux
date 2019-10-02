@@ -27,8 +27,11 @@ export const getLightWorldNodes = createSelector(
   isInverted,
   ( entrance, inverted ) => {
     let nodes: NodeId[] = [
+      NodeId.LIGHT_WATERFALL,
+      NodeId.LIGHT_UNCLE_ENTRANCE,
       NodeId.LIGHT_KINGS_TOMB_ENTRANCE,
       NodeId.LIGHT_SWAMP_ITEM,
+      NodeId.LIGHT_DAM_ENTRANCE,
       NodeId.LIGHT_SPIRAL_CAVE_ENTRANCE,
       NodeId.LIGHT_TAVERN_BACK_ENTRANCE,
       NodeId.LIGHT_CUCCO_HOUSE_ENTRANCE,
@@ -45,6 +48,7 @@ export const getLightWorldNodes = createSelector(
       NodeId.LIGHT_BIRD_LOVER,
       NodeId.LIGHT_ETHER_TABLET,
       NodeId.LIGHT_BOMBOS_TABLET,
+      NodeId.LIGHT_DESERT_LEDGE_ITEM,
       NodeId.LIGHT_B8_ZORA_MAIN,
       NodeId.LIGHT_DM_ASCENT_EXIT_CAVE,
       NodeId.LIGHT_POTION_SHOP_ENTRANCE,
