@@ -427,6 +427,7 @@ const lightOverworldEdges: Edge[] = [
   makeEdge( NodeId.LIGHT_G6_WATER, NodeId.LIGHT_G6_ITEM_ISLAND, NodeConnectionId.IsInverted ),
   makeEdge( NodeId.LIGHT_G6_WATER, NodeId.LIGHT_G6_NW ),
   makeEdge( NodeId.LIGHT_G6_WATER, NodeId.LIGHT_G6_NE ),
+  makeEdge( NodeId.LIGHT_G6_WATER, NodeId.LIGHT_F7_WATER ),
   makeEdge( NodeId.LIGHT_G6_WATER, NodeId.LIGHT_H8_WATER ),
   makeEdge( NodeId.LIGHT_G6_WATER, NodeId.LIGHT_G6_UPGRADE_ISLAND ),
   makeEdge( NodeId.LIGHT_G6_WATER, NodeId.LIGHT_G6_WATER_WARP ),

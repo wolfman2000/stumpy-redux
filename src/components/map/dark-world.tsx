@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import entranceLocations from '../../api/traversal/locations';
 import NodeId from '../../api/traversal/nodes/node-id';
 
 import { StumpyState } from '../../store/reducers';
 import { isInverted } from '../../store/selectors/settings';
+import { getDarkWorldNodes } from '../../store/selectors/traversals';
 
 import dwInverted from '../../assets/dark-inverted.png';
 import dwOriginal from '../../assets/dark-original.png';
@@ -13,13 +15,8 @@ import Location from './location';
 
 import './world.css';
 
-interface IWorldProps {
-  nodes?: NodeId[];
-}
-
-const DarkWorld: React.FC<IWorldProps> = ( {
+const DarkWorld: React.FC = ( {
   children,
-  nodes,
 } ) => {
   const inverted = useSelector<StumpyState, boolean>(
     isInverted,
@@ -32,8 +29,18 @@ const DarkWorld: React.FC<IWorldProps> = ( {
   };
 
   const allLocations = ( node: NodeId ) => {
-    return <Location key={node} nodeId={node} />;
+    return (
+      <Location
+        key={node}
+        node={node}
+        location={entranceLocations.get( node )!}
+      />
+    );
   };
+
+  const nodes = useSelector<StumpyState, NodeId[]>(
+    getDarkWorldNodes,
+  );
 
   const getLocations = () => {
     if ( !nodes ) {

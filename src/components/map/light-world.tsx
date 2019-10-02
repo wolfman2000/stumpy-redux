@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import entranceLocations from '../../api/traversal/locations';
 import NodeId from '../../api/traversal/nodes/node-id';
 
 import { StumpyState } from '../../store/reducers';
 import { isInverted } from '../../store/selectors/settings';
+import { getLightWorldNodes } from '../../store/selectors/traversals';
 
 import lwInverted from '../../assets/light-inverted.png';
 import lwOriginal from '../../assets/light-original.png';
@@ -13,13 +15,8 @@ import Location from './location';
 
 import './world.css';
 
-interface IWorldProps {
-  nodes?: NodeId[];
-}
-
-const LightWorld: React.FC<IWorldProps> = ( {
+const LightWorld: React.FC = ( {
   children,
-  nodes,
 } ) => {
   const inverted = useSelector<StumpyState, boolean>(
     isInverted,
@@ -32,12 +29,20 @@ const LightWorld: React.FC<IWorldProps> = ( {
   };
 
   const allLocations = ( node: NodeId ) => {
-    return <Location key={node} nodeId={node} />;
+    return (
+      <Location
+        key={node}
+        node={node}
+        location={entranceLocations.get( node )!}
+      />
+    );
   };
 
-  const getLocations = () => {
-    const nodes = [ NodeId.LIGHT_LINKS_HOUSE_ENTRANCE, NodeId.LIGHT_WELL_ENTRANCE ];
+  const nodes = useSelector<StumpyState, NodeId[]>(
+    getLightWorldNodes,
+  );
 
+  const getLocations = () => {
     if ( !nodes ) {
       return <React.Fragment />;
     }

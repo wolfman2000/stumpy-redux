@@ -53,7 +53,7 @@ const makeOutsideAlwaysLocation = ( left: number, top: number, treasureNodes: No
   };
 };
 
-const entranceLocations = new Map<NodeId, CssLocation>( [
+const entranceLocations: Map<NodeId, CssLocation> = new Map<NodeId, CssLocation>( [
   [
     NodeId.LIGHT_KINGS_TOMB_ENTRANCE,
     makeSingleAlwaysLocation( 61.6, 29.6, [ NodeId.CAVE_KINGS_TOMB] ),
@@ -107,7 +107,7 @@ const entranceLocations = new Map<NodeId, CssLocation>( [
     ] ),
   ],
   [
-    NodeId.LIGHT_WELL_ENTRANCE,
+    NodeId.LIGHT_PARADOX_TOP_ENTRANCE,
     makeMultipleAlwaysLocation( 82.8, 17, [
       NodeId.CAVE_PARADOX_SMALL_VAULT,
       NodeId.CAVE_PARADOX_LARGE_VAULT,
@@ -256,6 +256,49 @@ const entranceLocations = new Map<NodeId, CssLocation>( [
     NodeId.LIGHT_SHOVEL_SPOT,
     makeOutsideAlwaysLocation( 28.8, 66.2, [
       NodeId.LIGHT_SHOVEL_SPOT,
+    ] ),
+  ],
+  [
+    NodeId.LIGHT_MAD_BATTER_ENTRANCE,
+    makePitEntranceAlwaysLocation( 33, 56, [
+      NodeId.CAVE_MAD_BATTER_ITEM,
+    ] ),
+  ],
+  [
+    NodeId.LIGHT_MASTER_SWORD_PEDESTAL,
+    makeOutsideAlwaysLocation( 5, 3.2, [
+      NodeId.LIGHT_MASTER_SWORD_PEDESTAL,
+    ] ),
+  ],
+  [
+    NodeId.LIGHT_WATERFALL,
+    makeSingleAlwaysLocation( 89.8, 14.7, [
+      NodeId.LIGHT_WATERFALL,
+    ] ),
+  ],
+
+  [
+    NodeId.DARK_BREWERY_ENTRANCE,
+    makeSingleAlwaysLocation( 10.8, 57.8, [
+      NodeId.CAVE_BREWERY,
+    ] ),
+  ],
+  [
+    NodeId.DARK_C_HOUSE_ENTRANCE,
+    makeSingleAlwaysLocation( 21.6, 47.9, [
+      NodeId.CAVE_C_HOUSE,
+    ] ),
+  ],
+  [
+    NodeId.DARK_LEFT_MIRE_SHED_ENTRANCE,
+    makeSingleAlwaysLocation( 3.4, 79.5, [
+      NodeId.CAVE_MIRE_SHED_LEFT,
+    ] ),
+  ],
+  [
+    NodeId.DARK_SUPERBUNNY_CAVE_TOP,
+    makeMultipleAlwaysLocation( 85.6, 14.7, [
+      NodeId.CAVE_SUPERBUNNY_TOP,
     ] ),
   ],
 ] );
