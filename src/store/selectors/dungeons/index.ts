@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { StumpyState } from '../../reducers';
 
-import { CastleTower, CommonDungeon, EasternPalace, GanonsTower, HyruleCastle, MedallionDungeon } from '../../../api/dungeon/dungeon';
+import { CastleTower, CommonDungeon, EasternPalace, GanonsTower, HyruleCastle, MedallionDungeon, ZeldaDungeon } from '../../../api/dungeon/dungeon';
 import { DungeonId } from '../../../api/dungeon/dungeon-id';
 
 export const getHyruleCastle = ( state: StumpyState ) => {
@@ -55,4 +55,39 @@ export const getTurtleRock = ( state: StumpyState ) => {
 
 export const getGanonsTower = ( state: StumpyState ) => {
   return state.dungeons[DungeonId.GanonsTower] as GanonsTower;
+};
+
+export const makeGetDungeon = () => {
+  return ( state: StumpyState, id: DungeonId ): ZeldaDungeon | null => {
+    switch ( id ) {
+      case DungeonId.CastleTower:
+        return getCastleTower( state );
+      case DungeonId.DesertPalace:
+        return getDesertPalace( state );
+      case DungeonId.EasternPalace:
+        return getEasternPalace( state );
+      case DungeonId.GanonsTower:
+        return getGanonsTower( state );
+      case DungeonId.HyruleCastle:
+        return getHyruleCastle( state );
+      case DungeonId.IcePalace:
+        return getIcePalace( state );
+      case DungeonId.MiseryMire:
+        return getMiseryMire( state );
+      case DungeonId.PalaceOfDarkness:
+        return getPalaceOfDarkness( state );
+      case DungeonId.SkullWoods:
+        return getSkullWoods( state );
+      case DungeonId.SwampPalace:
+        return getSwampPalace( state );
+      case DungeonId.ThievesTown:
+        return getThievesTown( state );
+      case DungeonId.TowerOfHera:
+        return getTowerOfHera( state );
+      case DungeonId.TurtleRock:
+        return getTurtleRock( state );
+    }
+
+    return null;
+  };
 };

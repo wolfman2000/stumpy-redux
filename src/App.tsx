@@ -1,6 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
 
+import { DungeonId } from './api/dungeon/dungeon-id';
+import NodeId from './api/traversal/nodes/node-id';
+import DungeonComponent from './components';
+
 import './App.css';
 
 function App() {
@@ -19,6 +23,10 @@ function App() {
         >
           Learn React
         </a>
+        <DungeonComponent
+          dungeonId={DungeonId.EasternPalace}
+          treasureNodes={[NodeId.EP_01_BOWLING, NodeId.EP_01_MAP_CHEST, NodeId.EP_02_BOSS]}
+        />
       </header>
     </div>
   );

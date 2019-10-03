@@ -142,6 +142,7 @@ const lightCaveEdges: Edge[] = [
 
   // Light D7 connections
   makeEdge( NodeId.CAVE_SAHAS_MAIN, NodeId.CAVE_SAHAS_CLOSET, NodeConnectionId.HasBootsOrBombs ),
+  makeEdge( NodeId.CAVE_SAHAS_MAIN, NodeId.CAVE_SAHAS_PENDANT, NodeConnectionId.HasGreenPendant ),
   makeEdge( NodeId.CAVE_SAHAS_MAIN, NodeId.LIGHT_SAHASRAHLA_ENTRANCE ),
 
   // Light E3 connections

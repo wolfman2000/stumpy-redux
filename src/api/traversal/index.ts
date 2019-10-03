@@ -5,3 +5,10 @@ const fallbackNodes: NodeId[] = Object.keys( NodeId )
   .map( ( k ) => Number.parseInt( NodeId[k as any], 10 ) );
 
 export { fallbackNodes };
+
+export interface IVisitMap {
+  [id: number]: boolean;
+}
+
+const fallbackVisitMap: IVisitMap = {};
+export { fallbackVisitMap };

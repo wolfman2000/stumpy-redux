@@ -16,10 +16,78 @@ import {
 import AvailabilityLogic from '../../../api/traversal/availabilities/availability-logic';
 import Edge from '../../../api/traversal/edges/edge';
 import NodeId from '../../../api/traversal/nodes/node-id';
+import { isEntrance, isInverted } from '../settings';
 
 const getEdges = ( state: StumpyState ) => state.edges;
 
 export const getState = ( _: StumpyState ) => _; // Identity.
+
+export const getLightWorldNodes = createSelector(
+  isEntrance,
+  isInverted,
+  ( entrance, inverted ) => {
+    let nodes: NodeId[] = [
+      NodeId.LIGHT_WATERFALL,
+      NodeId.LIGHT_UNCLE_ENTRANCE,
+      NodeId.LIGHT_KINGS_TOMB_ENTRANCE,
+      NodeId.LIGHT_SWAMP_ITEM,
+      NodeId.LIGHT_DAM_ENTRANCE,
+      NodeId.LIGHT_SPIRAL_CAVE_ENTRANCE,
+      NodeId.LIGHT_TAVERN_BACK_ENTRANCE,
+      NodeId.LIGHT_CUCCO_HOUSE_ENTRANCE,
+      NodeId.LIGHT_AGINAH_ENTRANCE,
+      NodeId.LIGHT_SAHASRAHLA_ENTRANCE,
+      NodeId.LIGHT_WELL_ENTRANCE,
+      NodeId.LIGHT_BLINDS_HOUSE_ENTRANCE,
+      NodeId.LIGHT_PARADOX_TOP_ENTRANCE,
+      NodeId.LIGHT_SANCTUARY_BONK_ROCKS_ENTRANCE,
+      NodeId.LIGHT_MINI_MOLDORM_ENTRANCE,
+      NodeId.LIGHT_ICE_ROD_CAVE_ENTRANCE,
+      NodeId.LIGHT_BOTTLE_PURCHASE,
+      NodeId.LIGHT_SICK_KID_ENTRANCE,
+      NodeId.LIGHT_BIRD_LOVER,
+      NodeId.LIGHT_ETHER_TABLET,
+      NodeId.LIGHT_BOMBOS_TABLET,
+      NodeId.LIGHT_DESERT_LEDGE_ITEM,
+      NodeId.LIGHT_B8_ZORA_MAIN,
+      NodeId.LIGHT_DM_ASCENT_EXIT_CAVE,
+      NodeId.LIGHT_POTION_SHOP_ENTRANCE,
+      NodeId.LIGHT_FOREST_HIDEOUT_ENTRANCE,
+      NodeId.LIGHT_LUMBERJACK_ENTRANCE,
+      NodeId.LIGHT_SPECTACLE_ROCK_LOOKOUT_CAVE,
+      NodeId.LIGHT_VT_CAVE_ENTRANCE,
+      NodeId.LIGHT_GRAVEYARD_LEDGE_ENTRANCE,
+      NodeId.LIGHT_CHECKERBOARD_ENTRANCE,
+      NodeId.LIGHT_LIBRARY_ENTRANCE,
+      NodeId.LIGHT_MUSHROOM_SPOT,
+      NodeId.LIGHT_A4_SPECTACLE_ROCK,
+      NodeId.LIGHT_A6_ISLAND,
+      NodeId.LIGHT_RACE_GAME_ITEM,
+      NodeId.LIGHT_LAKE_ISLAND_ITEM,
+      NodeId.LIGHT_SHOVEL_SPOT,
+      NodeId.LIGHT_MAD_BATTER_ENTRANCE,
+      NodeId.LIGHT_MASTER_SWORD_PEDESTAL,
+    ];
+
+    if ( entrance || !inverted ) {
+      nodes.push( NodeId.LIGHT_LINKS_HOUSE_ENTRANCE );
+    }
+
+    if ( entrance ) {
+      nodes = nodes.concat( [] );
+    }
+
+    return nodes;
+  },
+);
+
+export const getDarkWorldNodes = createSelector(
+  isEntrance,
+  isInverted,
+  ( entrance, inverted ) => {
+    return [];
+  },
+);
 
 interface ISimpleNodeMap {
   [id: number]: NodeId[];

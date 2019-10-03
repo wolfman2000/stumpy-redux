@@ -6,6 +6,7 @@ enum NodeConnectionId {
   // Pure Settings
   IsInverted,
   IsNotInverted,
+  IsEntrance,
 
   // Pure Items
   HasHookshotLightWorld,
@@ -38,6 +39,7 @@ enum NodeConnectionId {
   CanActInDarkWorld,
 
   // More descriptive.
+  HasGreenPendant,
   CanDefeatMiniMoldorms,
   CanBombJumpOrHover,
   HasBootsOrBombs,

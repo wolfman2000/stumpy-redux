@@ -81,6 +81,8 @@ export const isInverted = createSelector(
   ( type ) => type === GameType.Inverted,
 );
 
+export const isEntrance = ( _: StumpyState ) => false;
+
 export const hasShuffledBosses = createSelector(
   getBossShuffle,
   ( boss ) => boss !== BossShuffle.None,

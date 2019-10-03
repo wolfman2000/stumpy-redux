@@ -365,6 +365,7 @@ const darkOverworldEdges: Edge[] = [
   makeEdge( NodeId.DARK_G6_WATER, NodeId.DARK_G6_ITEM_ISLAND ),
   makeEdge( NodeId.DARK_G6_WATER, NodeId.DARK_G6_NE ),
   makeEdge( NodeId.DARK_G6_WATER, NodeId.DARK_H8_WATER ),
+  makeEdge( NodeId.DARK_G6_WATER, NodeId.DARK_F7_WATER ),
   makeEdge( NodeId.DARK_G6_WATER, NodeId.DARK_G6_UPGRADE_ISLAND, NodeConnectionId.IsInverted ),
 
   makeEdge( NodeId.DARK_G6_ITEM_ISLAND, NodeId.DARK_G6_WATER ),
