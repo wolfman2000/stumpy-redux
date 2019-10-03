@@ -1,15 +1,16 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Availability from '../../api/traversal/availabilities/availability';
 import AvailabilityLogic from '../../api/traversal/availabilities/availability-logic';
-import entranceLocations from '../../api/traversal/locations';
 import CssLocation from '../../api/traversal/nodes/css-location';
 import EntranceType from '../../api/traversal/nodes/entrance-type';
 import NodeId from '../../api/traversal/nodes/node-id';
 
+import { StumpyAction, locationFlip } from '../../store/actions';
 import { StumpyState } from '../../store/reducers';
 import { makeGetAccessibility } from '../../store/selectors/traversals';
+import { makeGetVisited } from '../../store/selectors/visits';
 
 import './location.css';
 
@@ -24,10 +25,24 @@ const Location: React.FC<ILocationProps> = ( {
   location,
 } ) => {
 
+  const visibleDispatch = useDispatch();
+  const setVisibility = () => visibleDispatch( locationFlip( {
+    key: node,
+  } ) );
+
+  const memoedVisitedSpots = useMemo(
+    makeGetVisited,
+    [ node ],
+  );
+
   const memoedAvailability = useMemo(
     makeGetAccessibility,
     location.treasureNodes,
   );
+
+  const visitedSpot = ( state: StumpyState ) => memoedVisitedSpots( state, node );
+
+  const visited = useSelector<StumpyState, boolean>( visitedSpot );
 
   const localAvailability = ( state: StumpyState ) => {
     // tslint:disable-next-line: no-unused-expression
@@ -47,6 +62,7 @@ const Location: React.FC<ILocationProps> = ( {
           <rect
             width='100%'
             height='100%'
+            onClick={setVisibility}
           />
         );
       case EntranceType.Outside:
@@ -57,6 +73,7 @@ const Location: React.FC<ILocationProps> = ( {
             r='40%'
             width='100%'
             height='100%'
+            onClick={setVisibility}
           />
         );
       case EntranceType.PitEntrance:
@@ -65,6 +82,7 @@ const Location: React.FC<ILocationProps> = ( {
             points='5,5 95,5 50,95'
             width='100%'
             height='100%'
+            onClick={setVisibility}
           />
         );
       case EntranceType.PitExit:
@@ -73,6 +91,7 @@ const Location: React.FC<ILocationProps> = ( {
             points='5,95 95,95 50,5'
             width='100%'
             height='100%'
+            onClick={setVisibility}
           />
         );
       case EntranceType.Multiple:
@@ -81,6 +100,7 @@ const Location: React.FC<ILocationProps> = ( {
             points='50,5 95,50 50,95 5,50'
             width='100%'
             height='100%'
+            onClick={setVisibility}
           />
         );
       default:
@@ -106,6 +126,10 @@ const Location: React.FC<ILocationProps> = ( {
 
   const getClasses = (): string => {
     const names = ['location'];
+
+    if ( visited ) {
+      names.push( 'claimed' );
+    }
 
     if ( availabilityLogics.some( ( a ) => a.usesGlitches ) ) {
       names.push( 'glitches' );

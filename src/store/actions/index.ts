@@ -19,6 +19,7 @@ const DUNGEON_SET_BOSS_ID = 'dungeon/SET_BOSS_ID';
 const DUNGEON_SET_MEDALLION = 'dungeon/SET_MEDALLION';
 const DUNGEON_SET_REWARD = 'dungeon/SET_REWARD';
 const EDGE_SET_TARGET = 'edge/SET_TARGET';
+const NODE_FLIP_VISITED = 'location/FLIP_VISITED';
 
 export const updateSettings = createStandardAction( SETTING_UPDATE )<{
   key: string,
@@ -66,6 +67,10 @@ export const dungeonSetReward = createStandardAction( DUNGEON_SET_REWARD )<IDung
 
 export const dungeonSetSmallKey = createStandardAction( DUNGEON_SET_SMALL_KEY )<IDungeonValue>();
 
+export const locationFlip = createStandardAction( NODE_FLIP_VISITED )<{
+  key: NodeId;
+}>();
+
 type doNothingType = ActionType<typeof doNothing>;
 
 export type StumpyAction =
@@ -81,4 +86,5 @@ export type StumpyAction =
   ActionType<typeof dungeonSetReward> |
   ActionType<typeof dungeonSetSmallKey> |
   ActionType<typeof setEdge> |
+  ActionType<typeof locationFlip> |
   doNothingType;
